@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>Combat\combatmenubase.png</Source>
+      <Name>Combat\combatmenubase</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatmenubase.xnb</Output>
+      <Time>2013-03-23T21:10:46.6827024-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Combat\combatfontbig.spritefont</Source>
+      <Name>Combat\combatfontbig</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatfontbig.xnb</Output>
+      <Time>2013-03-23T21:33:54.552084-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Combat\cursor.png</Source>
+      <Name>Combat\cursor</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\cursor.xnb</Output>
+      <Time>2013-03-24T11:29:36.5514528-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Combat\dummyplayertexture.png</Source>
+      <Name>Combat\dummyplayertexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\dummyplayertexture.xnb</Output>
+      <Time>2013-03-24T12:40:28.7186629-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Combat\combatfontsmall.spritefont</Source>
+      <Name>Combat\combatfontsmall</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatfontsmall.xnb</Output>
+      <Time>2013-03-24T12:52:12.6789271-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Combat\dummyenemytexture.png</Source>
+      <Name>Combat\dummyenemytexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\dummyenemytexture.xnb</Output>
+      <Time>2013-03-24T13:23:27.6321683-07:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <ContentProjectGUID>{62F63B4E-27B6-4984-AED8-CCB82D99D9D1}</ContentProjectGUID>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>Reach</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoansContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2011-09-01T17:22:30-07:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2011-09-01T17:22:30-07:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2011-09-01T17:22:30-07:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2011-09-01T17:22:30-07:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2011-09-01T17:22:30-07:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2011-09-01T17:22:30-07:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2013-02-10T16:57:06.4728416-08:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>
