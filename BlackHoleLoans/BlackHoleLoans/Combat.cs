@@ -23,6 +23,8 @@ namespace BlackHoleLoans
         private Player dummyplayer;
         private Enemy1 dummyenemy;
         KeyboardState prevKeyboardState, currentKeyboardState;
+        private static readonly TimeSpan menuinterval = TimeSpan.FromMilliseconds(100);
+        private TimeSpan lastMenuChoiceTime;
         #endregion
         public Combat(ContentManager content,int height, int width,Game1 game)
         {
@@ -34,7 +36,7 @@ namespace BlackHoleLoans
             prevKeyboardState = Keyboard.GetState();
             currentKeyboardState = Keyboard.GetState();
             dummyplayer = new Player(5,5,5);
-            dummyenemy = new Enemy1(5,1,0);
+            dummyenemy = new Enemy1(6,1,0);
         }
 
         public void LoadContent()
@@ -51,7 +53,7 @@ namespace BlackHoleLoans
             #endregion
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             prevKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
@@ -66,15 +68,29 @@ namespace BlackHoleLoans
             }
             if(menuoption==1&&prevKeyboardState.IsKeyUp(Keys.Z)&&currentKeyboardState.IsKeyDown(Keys.Z))
             {
-                dummyenemy.GetEnemyStats().SubtractHealth(dummyplayer.GetPlayerStats().Attack-dummyenemy.GetEnemyStats().Defence);
-                if(dummyenemy.GetEnemyStats().Health==0)
-                {
-                    maingame.Exit();
-                }
+                lastMenuChoiceTime = gameTime.TotalGameTime;
+                menuoption = 3;
             }
             if (menuoption == 2 && prevKeyboardState.IsKeyUp(Keys.Z) && currentKeyboardState.IsKeyDown(Keys.Z))
             {
                 maingame.Exit();
+            }
+            if (menuoption == 3 && prevKeyboardState.IsKeyUp(Keys.Z) && currentKeyboardState.IsKeyDown(Keys.Z))
+            {
+                if(lastMenuChoiceTime + menuinterval <gameTime.TotalGameTime)
+                {
+                    dummyenemy.GetEnemyStats().SubtractHealth(dummyplayer.GetPlayerStats().Attack - dummyenemy.GetEnemyStats().Defence);
+                    dummyplayer.GetPlayerStats().SubtractHealth(dummyenemy.GetEnemyStats().Attack - dummyplayer.GetPlayerStats().Defence);
+                    if (dummyenemy.GetEnemyStats().Health == 0)
+                    {
+                        maingame.Exit();
+                    }
+                    menuoption = 1;
+                }
+            }
+            if (menuoption == 3 && prevKeyboardState.IsKeyUp(Keys.X) && currentKeyboardState.IsKeyDown(Keys.X))
+            {
+                menuoption = 1;
             }
         }
 
@@ -94,6 +110,11 @@ namespace BlackHoleLoans
             else if(menuoption == 2)
             {
                 spriteBatch.Draw(cursor, new Rectangle(436, 460, 64, 64), Color.White);
+            }
+            else if (menuoption == 3)
+            {
+                spriteBatch.DrawString(combatfontsmall, "Attack", new Vector2(330,490),Color.White);
+                spriteBatch.Draw(cursor, new Rectangle(295,490,32,32),Color.White);
             }
         }
         public void SetSpriteBatch(SpriteBatch sb)

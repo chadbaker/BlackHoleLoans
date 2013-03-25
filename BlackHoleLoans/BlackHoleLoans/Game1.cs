@@ -76,7 +76,7 @@ namespace BlackHoleLoans
                 this.Exit();
 
             // TODO: Add your update logic here
-            combat.Update();
+            combat.Update(gameTime);
             base.Update(gameTime);
         }
 

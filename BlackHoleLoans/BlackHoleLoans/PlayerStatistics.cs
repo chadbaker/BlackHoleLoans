@@ -44,6 +44,15 @@ namespace BlackHoleLoans
             level = 1;
             experience = 0;
         }
+
+        public void SubtractHealth(int dmg)
+        {
+            health -= dmg;
+            if (health < 0)
+            {
+                health = 0;
+            }
+        }
         /// <summary>
         /// Increments the current experience. If current experience + gained experience
         /// passes the required exp to level up, increments lvl and adds the leftover exp
