@@ -1,0 +1,3 @@
+﻿menuoption 1 = "Fight"
+menuoption 2 = "Run"
+menuoption 3 = "Attack"

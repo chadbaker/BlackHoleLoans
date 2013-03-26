@@ -9,7 +9,7 @@ namespace BlackHoleLoans
     {
         //int attack, defence, concentration;
         //int health, level, experience;
-        private int attack, defence, concentration, health;
+        private int attack, defence, concentration, health, level, experience;
 
         public int Attack
         {
@@ -30,10 +30,17 @@ namespace BlackHoleLoans
             get { return health; }
         }
 
-
-        int level, experience;
-
-
+        public bool isDead()
+        {
+            if (health <= 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public PlayerStatistics(int atk, int def, int con)
         {

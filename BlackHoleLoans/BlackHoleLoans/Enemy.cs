@@ -11,10 +11,10 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BlackHoleLoans
 {
-    class Enemy1
+    class Enemy
     {
         EnemyStatistics enemyStats;
-        public Enemy1(int att, int def, int con)
+        public Enemy(int att, int def, int con)
         {
             enemyStats = new EnemyStatistics(att,def,con);
 
@@ -23,6 +23,24 @@ namespace BlackHoleLoans
         public EnemyStatistics GetEnemyStats()
         {
             return enemyStats;
+        }
+
+        public void ExecuteAI1(Player p)
+        {
+            int damage = enemyStats.Attack - p.GetPlayerStats().Defence;
+            if (damage < 0)
+            {
+                damage = 1;
+            }
+            p.GetPlayerStats().SubtractHealth(damage);
+        }
+        
+        public void ExecuteAI2()
+        {
+        }
+
+        public void ExecuteA3()
+        {
         }
     }
 }

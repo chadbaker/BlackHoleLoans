@@ -74,7 +74,7 @@
   <ItemGroup>
     <Compile Include="AnimatedMovement.cs" />
     <Compile Include="Combat.cs" />
-    <Compile Include="Enemy1.cs" />
+    <Compile Include="Enemy.cs" />
     <Compile Include="EnemyStatistics.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerStatistics.cs" />
@@ -87,6 +87,7 @@
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
+    <Content Include="combatmenuoptions.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlackHoleLoansContent\BlackHoleLoansContent.contentproj">

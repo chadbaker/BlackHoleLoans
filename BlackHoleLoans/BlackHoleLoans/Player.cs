@@ -20,9 +20,20 @@ namespace BlackHoleLoans
         {
             playerStats = new PlayerStatistics(atk, def, con);
         }
+
         public PlayerStatistics GetPlayerStats()
         {
             return playerStats;
+        }
+
+        public void ExecuteBasicAttack(Enemy e)
+        {
+            int damage = playerStats.Attack - e.GetEnemyStats().Defence;
+            if (damage < 0)
+            {
+                damage = 1;
+            }
+            e.GetEnemyStats().SubtractHealth(damage);
         }
     }
 }

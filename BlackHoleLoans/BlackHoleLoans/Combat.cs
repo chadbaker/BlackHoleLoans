@@ -21,7 +21,7 @@ namespace BlackHoleLoans
         private Texture2D combatmenubase,cursor,dummyplayertexture,dummyenemytexture;
         private SpriteFont combatfontbig,combatfontsmall;
         private Player dummyplayer;
-        private Enemy1 dummyenemy;
+        private Enemy dummyenemy;
         KeyboardState prevKeyboardState, currentKeyboardState;
         private static readonly TimeSpan menuinterval = TimeSpan.FromMilliseconds(100);
         private TimeSpan lastMenuChoiceTime;
@@ -36,7 +36,7 @@ namespace BlackHoleLoans
             prevKeyboardState = Keyboard.GetState();
             currentKeyboardState = Keyboard.GetState();
             dummyplayer = new Player(5,5,5);
-            dummyenemy = new Enemy1(6,1,0);
+            dummyenemy = new Enemy(6,1,0);
         }
 
         public void LoadContent()
@@ -57,7 +57,8 @@ namespace BlackHoleLoans
         {
             prevKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
-            if(prevKeyboardState.IsKeyUp(Keys.Left)&&
+            #region combat menu logic
+            if (prevKeyboardState.IsKeyUp(Keys.Left)&&
                 currentKeyboardState.IsKeyDown(Keys.Left)&&menuoption==2)
             {
                 menuoption = 1;
@@ -79,8 +80,8 @@ namespace BlackHoleLoans
             {
                 if(lastMenuChoiceTime + menuinterval <gameTime.TotalGameTime)
                 {
-                    dummyenemy.GetEnemyStats().SubtractHealth(dummyplayer.GetPlayerStats().Attack - dummyenemy.GetEnemyStats().Defence);
-                    dummyplayer.GetPlayerStats().SubtractHealth(dummyenemy.GetEnemyStats().Attack - dummyplayer.GetPlayerStats().Defence);
+                    dummyplayer.ExecuteBasicAttack(dummyenemy);
+                    dummyenemy.ExecuteAI1(dummyplayer);
                     if (dummyenemy.GetEnemyStats().Health == 0)
                     {
                         maingame.Exit();
@@ -92,6 +93,7 @@ namespace BlackHoleLoans
             {
                 menuoption = 1;
             }
+            #endregion
         }
 
         public void Draw()
@@ -117,10 +119,19 @@ namespace BlackHoleLoans
                 spriteBatch.Draw(cursor, new Rectangle(295,490,32,32),Color.White);
             }
         }
+
+        public void UnloadContent()
+        {
+            _content.Unload();
+        }
+
         public void SetSpriteBatch(SpriteBatch sb)
         {
             spriteBatch = sb;
         }
 
+        public void DrawMessage(String message)
+        {
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace BlackHoleLoans
     {
         //int attack, defence, concentration;
         //int health, level, experience;
-        private int attack, defence, concentration, health;
+        private int attack, defence, concentration, health,level;
 
         public int Attack
         {
@@ -39,10 +39,6 @@ namespace BlackHoleLoans
             }
         }
 
-        int level, experience;
-
-
-
         public EnemyStatistics(int atk, int def, int con)
         {
             attack = atk;
@@ -50,7 +46,6 @@ namespace BlackHoleLoans
             concentration = con;
             health = 10;
             level = 1;
-            experience = 0;
         }
     }
 }
