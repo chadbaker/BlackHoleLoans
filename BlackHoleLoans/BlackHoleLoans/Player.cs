@@ -26,7 +26,7 @@ namespace BlackHoleLoans
             return playerStats;
         }
 
-        public void ExecuteBasicAttack(Enemy e)
+        public int ExecuteBasicAttack(Enemy e)
         {
             int damage = playerStats.Attack - e.GetEnemyStats().Defence;
             if (damage < 0)
@@ -34,6 +34,7 @@ namespace BlackHoleLoans
                 damage = 1;
             }
             e.GetEnemyStats().SubtractHealth(damage);
+            return damage;
         }
     }
 }

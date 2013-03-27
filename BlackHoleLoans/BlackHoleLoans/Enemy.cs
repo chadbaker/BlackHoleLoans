@@ -25,7 +25,7 @@ namespace BlackHoleLoans
             return enemyStats;
         }
 
-        public void ExecuteAI1(Player p)
+        public int ExecuteAI1(Player p)
         {
             int damage = enemyStats.Attack - p.GetPlayerStats().Defence;
             if (damage < 0)
@@ -33,6 +33,7 @@ namespace BlackHoleLoans
                 damage = 1;
             }
             p.GetPlayerStats().SubtractHealth(damage);
+            return damage;
         }
         
         public void ExecuteAI2()

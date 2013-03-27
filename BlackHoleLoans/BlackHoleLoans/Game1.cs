@@ -88,7 +88,7 @@ namespace BlackHoleLoans
         {
             GraphicsDevice.Clear(Color.Green);
             spriteBatch.Begin();
-            combat.Draw();
+            combat.Draw(gameTime);
             spriteBatch.End();
             // TODO: Add your drawing code here
 

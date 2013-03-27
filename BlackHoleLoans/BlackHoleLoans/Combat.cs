@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -15,6 +16,7 @@ namespace BlackHoleLoans
     {
         #region global variables
         private Game1 maingame;
+        private Queue<string> messageQueue;
         private SpriteBatch spriteBatch;
         private ContentManager _content;
         private int _height, _width,menuoption;
@@ -24,7 +26,9 @@ namespace BlackHoleLoans
         private Enemy dummyenemy;
         KeyboardState prevKeyboardState, currentKeyboardState;
         private static readonly TimeSpan menuinterval = TimeSpan.FromMilliseconds(100);
-        private TimeSpan lastMenuChoiceTime;
+        private static readonly TimeSpan messageinterval = TimeSpan.FromMilliseconds(1500);
+        private TimeSpan lastMenuChoiceTime,lastMessageTime;
+        private bool executeMenuLogic;
         #endregion
         public Combat(ContentManager content,int height, int width,Game1 game)
         {
@@ -37,6 +41,7 @@ namespace BlackHoleLoans
             currentKeyboardState = Keyboard.GetState();
             dummyplayer = new Player(5,5,5);
             dummyenemy = new Enemy(6,1,0);
+            messageQueue = new Queue<string>();
         }
 
         public void LoadContent()
@@ -55,48 +60,58 @@ namespace BlackHoleLoans
 
         public void Update(GameTime gameTime)
         {
+            int damage;
             prevKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
             #region combat menu logic
-            if (prevKeyboardState.IsKeyUp(Keys.Left)&&
-                currentKeyboardState.IsKeyDown(Keys.Left)&&menuoption==2)
+            if (executeMenuLogic)
             {
-                menuoption = 1;
-            }
-            else if(prevKeyboardState.IsKeyUp(Keys.Right)&&currentKeyboardState.IsKeyDown(Keys.Right)&&menuoption==1)
-            {
-                menuoption = 2;
-            }
-            if(menuoption==1&&prevKeyboardState.IsKeyUp(Keys.Z)&&currentKeyboardState.IsKeyDown(Keys.Z))
-            {
-                lastMenuChoiceTime = gameTime.TotalGameTime;
-                menuoption = 3;
-            }
-            if (menuoption == 2 && prevKeyboardState.IsKeyUp(Keys.Z) && currentKeyboardState.IsKeyDown(Keys.Z))
-            {
-                maingame.Exit();
-            }
-            if (menuoption == 3 && prevKeyboardState.IsKeyUp(Keys.Z) && currentKeyboardState.IsKeyDown(Keys.Z))
-            {
-                if(lastMenuChoiceTime + menuinterval <gameTime.TotalGameTime)
+                if (prevKeyboardState.IsKeyUp(Keys.Left) &&
+                    currentKeyboardState.IsKeyDown(Keys.Left) && menuoption == 2)
                 {
-                    dummyplayer.ExecuteBasicAttack(dummyenemy);
-                    dummyenemy.ExecuteAI1(dummyplayer);
-                    if (dummyenemy.GetEnemyStats().Health == 0)
-                    {
-                        maingame.Exit();
-                    }
                     menuoption = 1;
                 }
-            }
-            if (menuoption == 3 && prevKeyboardState.IsKeyUp(Keys.X) && currentKeyboardState.IsKeyDown(Keys.X))
-            {
-                menuoption = 1;
+                else if (prevKeyboardState.IsKeyUp(Keys.Right) && currentKeyboardState.IsKeyDown(Keys.Right) && menuoption == 1)
+                {
+                    menuoption = 2;
+                }
+                if (menuoption == 1 && prevKeyboardState.IsKeyUp(Keys.Z) && currentKeyboardState.IsKeyDown(Keys.Z))
+                {
+                    lastMenuChoiceTime = gameTime.TotalGameTime;
+                    menuoption = 3;
+                }
+                if (menuoption == 2 && prevKeyboardState.IsKeyUp(Keys.Z) && currentKeyboardState.IsKeyDown(Keys.Z))
+                {
+                    maingame.Exit();
+                }
+                if (menuoption == 3 && prevKeyboardState.IsKeyUp(Keys.Z) && currentKeyboardState.IsKeyDown(Keys.Z))
+                {
+                    if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                    {
+                        damage = dummyplayer.ExecuteBasicAttack(dummyenemy);
+                        lastMessageTime = gameTime.TotalGameTime;
+                        AddMessage("Player did " + damage + " damage to Enemy!");
+                        if (dummyenemy.GetEnemyStats().Health > 0)
+                        {
+                            damage = dummyenemy.ExecuteAI1(dummyplayer);
+                            AddMessage("Enemy did " + damage + " damage to Player!");
+                        }
+                        else
+                        {
+                            AddMessage("Enemy died!");
+                        }
+                        menuoption = 1;
+                    }
+                }
+                if (menuoption == 3 && prevKeyboardState.IsKeyUp(Keys.X) && currentKeyboardState.IsKeyDown(Keys.X))
+                {
+                    menuoption = 1;
+                }
             }
             #endregion
         }
 
-        public void Draw()
+        public void Draw(GameTime gameTime)
         {
             spriteBatch.Draw(combatmenubase, new Rectangle(0, 400, _width, 200), Color.White);
             spriteBatch.Draw(dummyplayertexture,new Rectangle(100,150,64,64),Color.White);
@@ -105,18 +120,38 @@ namespace BlackHoleLoans
             spriteBatch.DrawString(combatfontsmall, dummyenemy.GetEnemyStats().Health + "", new Vector2(510, 234), Color.Red);
             spriteBatch.DrawString(combatfontbig, "FIGHT", new Vector2(100, 460), Color.White);
             spriteBatch.DrawString(combatfontbig, "RUN", new Vector2(500, 460), Color.White);
-            if (menuoption == 1)
+            if (executeMenuLogic)
             {
-                spriteBatch.Draw(cursor, new Rectangle(36,460,64,64),Color.White);
+                if (menuoption == 1)
+                {
+                    spriteBatch.Draw(cursor, new Rectangle(36, 460, 64, 64), Color.White);
+                }
+                else if (menuoption == 2)
+                {
+                    spriteBatch.Draw(cursor, new Rectangle(436, 460, 64, 64), Color.White);
+                }
+                else if (menuoption == 3)
+                {
+                    spriteBatch.DrawString(combatfontsmall, "Attack", new Vector2(330, 490), Color.White);
+                    spriteBatch.Draw(cursor, new Rectangle(295, 490, 32, 32), Color.White);
+                }
             }
-            else if(menuoption == 2)
+            if (messageQueue.Count > 0)
             {
-                spriteBatch.Draw(cursor, new Rectangle(436, 460, 64, 64), Color.White);
+                executeMenuLogic = false;
+                if (lastMessageTime + messageinterval > gameTime.TotalGameTime)
+                {
+                    DrawMessage(messageQueue.Peek());
+                }
+                else
+                {
+                    messageQueue.Dequeue();
+                    lastMessageTime = gameTime.TotalGameTime;
+                }
             }
-            else if (menuoption == 3)
+            else
             {
-                spriteBatch.DrawString(combatfontsmall, "Attack", new Vector2(330,490),Color.White);
-                spriteBatch.Draw(cursor, new Rectangle(295,490,32,32),Color.White);
+                executeMenuLogic = true;
             }
         }
 
@@ -132,6 +167,13 @@ namespace BlackHoleLoans
 
         public void DrawMessage(String message)
         {
+            spriteBatch.Draw(combatmenubase, new Rectangle(0,0,_width,100),Color.White);
+            spriteBatch.DrawString(combatfontsmall, message, new Vector2(25,25),Color.White);
+        }
+
+        public void AddMessage(String m)
+        {
+            messageQueue.Enqueue(m);
         }
     }
 }
