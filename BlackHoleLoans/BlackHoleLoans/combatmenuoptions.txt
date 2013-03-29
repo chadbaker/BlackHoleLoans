@@ -1,3 +1,5 @@
 ﻿menuoption 1 = "Fight"
 menuoption 2 = "Run"
 menuoption 3 = "Attack"
+menuoption 4 = "Skill1"
+menuoption 5 = "Skill2"

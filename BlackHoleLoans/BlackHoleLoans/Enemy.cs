@@ -13,11 +13,12 @@ namespace BlackHoleLoans
 {
     class Enemy
     {
+        public string Name { get;set; }
         EnemyStatistics enemyStats;
-        public Enemy(int att, int def, int con)
+        public Enemy(int att, int def, int con, string n)
         {
             enemyStats = new EnemyStatistics(att,def,con);
-
+            Name = n;
         }
 
         public EnemyStatistics GetEnemyStats()

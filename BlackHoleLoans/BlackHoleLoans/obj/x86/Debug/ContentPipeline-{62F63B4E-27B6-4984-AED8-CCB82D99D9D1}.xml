@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatmenubase.xnb</Output>
-      <Time>2013-03-23T21:10:46.6827024-07:00</Time>
+      <Time>2013-03-28T17:26:45.3258522-07:00</Time>
     </Item>
     <Item>
       <Source>Combat\combatfontbig.spritefont</Source>
@@ -54,6 +54,15 @@
       <Options>None</Options>
       <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\dummyenemytexture.xnb</Output>
       <Time>2013-03-24T13:23:27.6321683-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Combat\healthbar.png</Source>
+      <Name>Combat\healthbar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\healthbar.xnb</Output>
+      <Time>2013-03-28T23:12:59.0010385-07:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

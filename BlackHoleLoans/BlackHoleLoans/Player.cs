@@ -14,11 +14,16 @@ namespace BlackHoleLoans
     {
         PlayerStatistics playerStats;
         Texture2D[] playerDirMovement;
-
-        public Player(int atk, int def, int con)//also pass in array of textures (player dir movement) & an int (for which class
+        public string Name { get; set; }
+        public Skill skillA{get;set;}
+        public Skill skillB{get;set;}
+        public Player(int atk, int def, int con, string n,Skill a, Skill b)//also pass in array of textures (player dir movement) & an int (for which class
         //the player is?) - don't need anything for the race
         {
             playerStats = new PlayerStatistics(atk, def, con);
+            Name = n;
+            skillA = a;
+            skillB = b;
         }
 
         public PlayerStatistics GetPlayerStats()
@@ -29,6 +34,28 @@ namespace BlackHoleLoans
         public int ExecuteBasicAttack(Enemy e)
         {
             int damage = playerStats.Attack - e.GetEnemyStats().Defence;
+            if (damage < 0)
+            {
+                damage = 1;
+            }
+            e.GetEnemyStats().SubtractHealth(damage);
+            return damage;
+        }
+
+        public int ExecuteSkillA(Enemy e)
+        {
+            int damage = (int)(playerStats.Concentration * skillA.skillRatio)-e.GetEnemyStats().Defence;
+            if (damage < 0)
+            {
+                damage = 1;
+            }
+            e.GetEnemyStats().SubtractHealth(damage);
+            return damage;
+        }
+
+        public int ExecuteSkillB(Enemy e)
+        {
+            int damage = (int)(playerStats.Concentration * skillB.skillRatio) - e.GetEnemyStats().Defence;
             if (damage < 0)
             {
                 damage = 1;
