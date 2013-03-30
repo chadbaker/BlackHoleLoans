@@ -20,6 +20,7 @@ namespace BlackHoleLoans
         private SpriteBatch spriteBatch;
         private ContentManager _content;
         private int _height, _width,menuoption;
+        private int lastPlayerHealth,lastEnemyHealth;
         private Texture2D combatmenubase,cursor,dummyplayertexture,dummyenemytexture,healthbar;
         private SpriteFont combatfontbig,combatfontsmall;
         private Player dummyplayer;
@@ -41,8 +42,8 @@ namespace BlackHoleLoans
             menuoption = (int)MenuOption.Fight;
             prevKeyboardState = Keyboard.GetState();
             currentKeyboardState = Keyboard.GetState();
-            dummyplayer = new Player(5,5,5,"Player",new Skill(Skill.Skills.Fire),new Skill(Skill.Skills.Ice));
-            dummyenemy = new Enemy(6,1,0,"Dummy");
+            dummyplayer = new Player(5,5,5,"Player",new Skill(Skill.Skills.Fire),new Skill(Skill.Skills.Heal));
+            dummyenemy = new Enemy(8,1,0,"Dummy",1);
             messageQueue = new Queue<string>();
 
         }
@@ -205,38 +206,40 @@ namespace BlackHoleLoans
 
         public void StartTurn(GameTime gameTime, MenuOption menuOption)
         {
-            int damage;
+            lastMessageTime = gameTime.TotalGameTime;
             if (menuOption == MenuOption.Attack)
             {
-                damage = dummyplayer.ExecuteBasicAttack(dummyenemy);
-                lastMessageTime = gameTime.TotalGameTime;
+                lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
+                lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
+                dummyplayer.ExecuteBasicAttack(dummyenemy);
                 AddMessage(dummyplayer.Name+" attacked " + dummyenemy.Name+"!");
-                AddMessage(dummyplayer.Name + " did " + damage + " damage to " + dummyenemy.Name + "!");
+                DetermineMessage();
             }
             else if(menuOption == MenuOption.SkillA)
             {
-                damage = dummyplayer.ExecuteSkillA(dummyenemy);
-                lastMessageTime = gameTime.TotalGameTime;
+                lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
+                lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
+                dummyplayer.ExecuteSkillA(dummyenemy,dummyplayer);
                 AddMessage(dummyplayer.Name + " used " + dummyplayer.skillA.Name+"!");
-                AddMessage(dummyplayer.Name + " did " + damage+ " damage to " + dummyenemy.Name + "!");
+                DetermineMessage();
             }
 
             else if(menuOption == MenuOption.SkillB)
             {
-                damage = dummyplayer.ExecuteSkillB(dummyenemy);
-                lastMessageTime = gameTime.TotalGameTime;
+                lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
+                lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
+                dummyplayer.ExecuteSkillB(dummyenemy,dummyplayer);
                 AddMessage(dummyplayer.Name + " used " + dummyplayer.skillB.Name + "!");
-                AddMessage(dummyplayer.Name + " did " + damage + " damage to " + dummyenemy.Name + "!");
+                DetermineMessage();
             }
 
             if (dummyenemy.GetEnemyStats().Health > 0)
             {
-                damage = dummyenemy.ExecuteAI1(dummyplayer);
-                AddMessage( dummyenemy.Name + " did " + damage + " damage to "+dummyplayer.Name+"!");
-            }
-            else
-            {
-                AddMessage( dummyenemy.Name+" died!");
+                lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
+                lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
+                dummyenemy.ExecuteAI1(dummyplayer);
+                AddMessage(dummyenemy.Name + " attacked " + dummyplayer.Name + "!");
+                DetermineMessage();
             }
         }
 
@@ -309,16 +312,24 @@ namespace BlackHoleLoans
         {
             spriteBatch.Draw(dummyplayertexture, new Rectangle(_width/8, _height/4,
                 dummyplayertexture.Width, dummyplayertexture.Height), Color.White);
-            spriteBatch.Draw(dummyenemytexture, new Rectangle(7*_width/8-dummyenemytexture.Width, _height/4,
+            spriteBatch.Draw(dummyenemytexture,
+                new Rectangle(7*_width/8-dummyenemytexture.Width, _height/4,
                 dummyenemytexture.Width,dummyenemytexture.Height), Color.White);
             spriteBatch.DrawString(combatfontsmall, 
-                dummyplayer.GetPlayerStats().Health + "", new Vector2(_width/8, _height/4+dummyplayertexture.Height), 
+                dummyplayer.GetPlayerStats().Health + "/"
+                +dummyplayer.GetPlayerStats().TotalHealth, 
+                new Vector2(_width/8, _height/4+dummyplayertexture.Height+healthbar.Height), 
                 Color.Red);
-            spriteBatch.DrawString(combatfontsmall,
-                dummyenemy.GetEnemyStats().Health + "",
+            //uncomment for enemy health to appear on screen
+            /*spriteBatch.DrawString(combatfontsmall,
+                dummyenemy.GetEnemyStats().Health + "/"+dummyenemy.GetEnemyStats().TotalHealth,
                 new Vector2(7 * _width / 8 - dummyenemytexture.Width,
-                    _height / 4 + dummyplayertexture.Height), Color.Red);
-            DrawHealthBars(100,600,300);
+                    _height / 4 + dummyplayertexture.Height+healthbar.Height),
+                    Color.Red);
+             */
+            DrawHealthBars(_width /8, 7 * _width / 8 - dummyenemytexture.Width,
+                _height / 4 + dummyplayertexture.Height,
+                _height / 4 + dummyplayertexture.Height);
         }
 
         public void DrawMessageQueue(GameTime gameTime)
@@ -342,7 +353,7 @@ namespace BlackHoleLoans
             }
         }
 
-        public void DrawHealthBars(int x,int x2,int y)
+        public void DrawHealthBars(int x,int x2,int y,int y2)
         {
             //player health bar
             spriteBatch.Draw(healthbar,new Rectangle(x,y,healthbar.Width,healthbar.Height),Color.Black);
@@ -353,12 +364,56 @@ namespace BlackHoleLoans
                 (double)dummyplayer.GetPlayerStats().TotalHealth),
                 healthbar.Height - 10), Color.Red);
             //enemy health bar
-            spriteBatch.Draw(healthbar, new Rectangle(x2, y, healthbar.Width, healthbar.Height), Color.Black);
-            spriteBatch.Draw(healthbar, new Rectangle(x2 + 5, y + 5, healthbar.Width - 10, healthbar.Height - 10), Color.Gray);
-            spriteBatch.Draw(healthbar, new Rectangle(x2 + 5, y + 5, (int)((healthbar.Width - 10) *
+            spriteBatch.Draw(healthbar, new Rectangle(x2, y2, healthbar.Width, healthbar.Height), Color.Black);
+            spriteBatch.Draw(healthbar, new Rectangle(x2 + 5, y2 + 5, healthbar.Width - 10, healthbar.Height - 10), Color.Gray);
+            spriteBatch.Draw(healthbar, new Rectangle(x2 + 5, y2 + 5, (int)((healthbar.Width - 10) *
                 (double)dummyenemy.GetEnemyStats().Health /
                 (double)dummyenemy.GetEnemyStats().TotalHealth),
                 healthbar.Height - 10), Color.Red);
+        }
+
+        public void DetermineMessage()
+        {
+            //if block dealing with the player
+            if (lastPlayerHealth > dummyplayer.GetPlayerStats().Health &&
+                dummyplayer.GetPlayerStats().Health != 0)
+            {
+                AddMessage(dummyplayer.Name + " took " + 
+                    (lastPlayerHealth - dummyplayer.GetPlayerStats().Health)
+                    + " damage!");
+            }
+
+            else if (lastPlayerHealth < dummyplayer.GetPlayerStats().Health)
+            {
+                AddMessage(dummyplayer.Name + " recovered " +
+                    (dummyplayer.GetPlayerStats().Health-lastPlayerHealth)
+                    +" health!");
+            }
+
+            else if (dummyplayer.GetPlayerStats().Health == 0)
+            {
+                AddMessage(dummyplayer.Name + " fainted!");
+            }
+            //end if block dealing with the player
+            //if block dealing with the enemy
+            if (lastEnemyHealth > dummyenemy.GetEnemyStats().Health &&
+                dummyenemy.GetEnemyStats().Health != 0)
+            {
+                AddMessage(dummyenemy.Name + " took " + 
+                    (lastEnemyHealth - dummyenemy.GetEnemyStats().Health) 
+                    + " damage!");
+            }
+            else if(dummyenemy.GetEnemyStats().Health == 0 && dummyenemy.isDead==false)
+            {
+                AddMessage(dummyenemy.Name + " died!");
+                dummyenemy.isDead = true;
+            }
+            //end if block dealing with enemy
+            if(lastPlayerHealth == dummyplayer.GetPlayerStats().Health &&
+                lastEnemyHealth==dummyenemy.GetEnemyStats().Health)
+            {
+                AddMessage("No effect..");
+            }
         }
     }
 }

@@ -48,7 +48,7 @@ namespace BlackHoleLoans
             attack = atk;
             defence = def;
             concentration = con;
-            health = 100;
+            health = 25;
             TotalHealth = health;
             level = 1;
             experience = 0;
@@ -62,6 +62,16 @@ namespace BlackHoleLoans
                 health = 0;
             }
         }
+
+        public void addHealth(int h)
+        {
+            health += h;
+            if(health > TotalHealth)
+            {
+                health = TotalHealth;
+            }
+        }
+
         /// <summary>
         /// Increments the current experience. If current experience + gained experience
         /// passes the required exp to level up, increments lvl and adds the leftover exp

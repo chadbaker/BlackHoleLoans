@@ -42,26 +42,40 @@ namespace BlackHoleLoans
             return damage;
         }
 
-        public int ExecuteSkillA(Enemy e)
+        public void ExecuteSkillA(Enemy e,Player p)
         {
-            int damage = (int)(playerStats.Concentration * skillA.skillRatio)-e.GetEnemyStats().Defence;
-            if (damage < 0)
+            if (skillA.isDamage)
             {
-                damage = 1;
+                int damage = (int)(playerStats.Concentration * skillA.skillRatio) - e.GetEnemyStats().Defence;
+                if (damage < 0)
+                {
+                    damage = 1;
+                }
+                e.GetEnemyStats().SubtractHealth(damage);
             }
-            e.GetEnemyStats().SubtractHealth(damage);
-            return damage;
+            else if (skillA.isHealing)
+            {
+                int health = (int)(playerStats.Concentration * skillA.skillRatio);
+                p.GetPlayerStats().addHealth(health);
+            }
         }
 
-        public int ExecuteSkillB(Enemy e)
+        public void ExecuteSkillB(Enemy e,Player p)
         {
-            int damage = (int)(playerStats.Concentration * skillB.skillRatio) - e.GetEnemyStats().Defence;
-            if (damage < 0)
+            if (skillB.isDamage)
             {
-                damage = 1;
+                int damage = (int)(playerStats.Concentration * skillB.skillRatio) - e.GetEnemyStats().Defence;
+                if (damage < 0)
+                {
+                    damage = 1;
+                }
+                e.GetEnemyStats().SubtractHealth(damage);
             }
-            e.GetEnemyStats().SubtractHealth(damage);
-            return damage;
+            else if (skillB.isHealing)
+            {
+                int health = (int)(playerStats.Concentration * skillB.skillRatio);
+                p.GetPlayerStats().addHealth(health);
+            }
         }
     }
 }
