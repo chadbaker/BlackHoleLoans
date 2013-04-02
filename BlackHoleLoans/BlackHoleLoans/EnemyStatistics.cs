@@ -38,7 +38,14 @@ namespace BlackHoleLoans
                 health = 0;
             }
         }
-
+        public void addHealth(int h)
+        {
+            health += h;
+            if (health > TotalHealth)
+            {
+                health = TotalHealth;
+            }
+        }
         public EnemyStatistics(int atk, int def, int con)
         {
             attack = atk;

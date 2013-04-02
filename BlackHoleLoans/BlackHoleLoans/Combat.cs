@@ -30,6 +30,7 @@ namespace BlackHoleLoans
         private static readonly TimeSpan messageinterval = TimeSpan.FromMilliseconds(1500);
         private TimeSpan lastMenuChoiceTime,lastMessageTime;
         private bool executeMenuLogic;
+        private Skill chosenEnemySkill;
         #endregion
         public enum MenuOption {Fight=1,Run=2,Attack=3,SkillA=4,SkillB=5}
 
@@ -43,9 +44,8 @@ namespace BlackHoleLoans
             prevKeyboardState = Keyboard.GetState();
             currentKeyboardState = Keyboard.GetState();
             dummyplayer = new Player(5,5,5,"Player",new Skill(Skill.Skills.Fire),new Skill(Skill.Skills.Heal));
-            dummyenemy = new Enemy(8,1,0,"Dummy",1);
+            dummyenemy = new Enemy(8,1,2,"Dummy",new Skill(Skill.Skills.Fire),new Skill(Skill.Skills.Heal));
             messageQueue = new Queue<string>();
-
         }
 
         public void LoadContent()
@@ -80,7 +80,7 @@ namespace BlackHoleLoans
                     currentKeyboardState.IsKeyDown(Keys.Right) &&
                     menuoption == (int)MenuOption.Fight)
                 {
-                    menuoption = (int)MenuOption.Run; ;
+                    menuoption = (int)MenuOption.Run; 
                 }
                 if (menuoption == (int)MenuOption.Fight &&
                     prevKeyboardState.IsKeyUp(Keys.Z) &&
@@ -207,38 +207,55 @@ namespace BlackHoleLoans
         public void StartTurn(GameTime gameTime, MenuOption menuOption)
         {
             lastMessageTime = gameTime.TotalGameTime;
+            lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
+            lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
+
             if (menuOption == MenuOption.Attack)
             {
-                lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
-                lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
                 dummyplayer.ExecuteBasicAttack(dummyenemy);
                 AddMessage(dummyplayer.Name+" attacked " + dummyenemy.Name+"!");
-                DetermineMessage();
             }
             else if(menuOption == MenuOption.SkillA)
             {
-                lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
-                lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
                 dummyplayer.ExecuteSkillA(dummyenemy,dummyplayer);
                 AddMessage(dummyplayer.Name + " used " + dummyplayer.skillA.Name+"!");
-                DetermineMessage();
             }
 
             else if(menuOption == MenuOption.SkillB)
             {
-                lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
-                lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
                 dummyplayer.ExecuteSkillB(dummyenemy,dummyplayer);
                 AddMessage(dummyplayer.Name + " used " + dummyplayer.skillB.Name + "!");
-                DetermineMessage();
             }
+
+            DetermineMessage();
 
             if (dummyenemy.GetEnemyStats().Health > 0)
             {
                 lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
                 lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
-                dummyenemy.ExecuteAI1(dummyplayer);
-                AddMessage(dummyenemy.Name + " attacked " + dummyplayer.Name + "!");
+                if (dummyenemy.whichAi == 1)
+                {
+                    dummyenemy.ExecuteAI1(dummyplayer,dummyenemy);
+                    AddMessage(dummyenemy.Name + " attacked " + dummyplayer.Name + "!");
+                }
+                else if (dummyenemy.whichAi == 2)
+                {
+                    //need to check if an attack or skill is used
+                    chosenEnemySkill=dummyenemy.ExecuteAI2(dummyplayer,dummyenemy);
+                    if (chosenEnemySkill != null)
+                    {
+                        AddMessage(dummyenemy.Name + " cast " + dummyenemy.skillA.Name + "!");
+                    }
+                    else
+                    {
+                        AddMessage(dummyenemy.Name + " attacked " + dummyplayer.Name + "!");
+                    }
+                }
+                else if (dummyenemy.whichAi == 3)
+                {
+                    chosenEnemySkill = dummyenemy.ExecuteAI3(dummyplayer,dummyenemy);
+                    AddMessage(dummyenemy.Name + " cast " + chosenEnemySkill.Name + "!");
+                }
                 DetermineMessage();
             }
         }
@@ -321,12 +338,12 @@ namespace BlackHoleLoans
                 new Vector2(_width/8, _height/4+dummyplayertexture.Height+healthbar.Height), 
                 Color.Red);
             //uncomment for enemy health to appear on screen
-            /*spriteBatch.DrawString(combatfontsmall,
+            spriteBatch.DrawString(combatfontsmall,
                 dummyenemy.GetEnemyStats().Health + "/"+dummyenemy.GetEnemyStats().TotalHealth,
                 new Vector2(7 * _width / 8 - dummyenemytexture.Width,
                     _height / 4 + dummyplayertexture.Height+healthbar.Height),
                     Color.Red);
-             */
+             
             DrawHealthBars(_width /8, 7 * _width / 8 - dummyenemytexture.Width,
                 _height / 4 + dummyplayertexture.Height,
                 _height / 4 + dummyplayertexture.Height);
@@ -402,6 +419,12 @@ namespace BlackHoleLoans
                 AddMessage(dummyenemy.Name + " took " + 
                     (lastEnemyHealth - dummyenemy.GetEnemyStats().Health) 
                     + " damage!");
+            }
+            else if(lastEnemyHealth<dummyenemy.GetEnemyStats().Health)
+            {
+                AddMessage(dummyenemy.Name + " recovered " +
+                    (dummyenemy.GetEnemyStats().Health-lastEnemyHealth)
+                    +" health!");
             }
             else if(dummyenemy.GetEnemyStats().Health == 0 && dummyenemy.isDead==false)
             {

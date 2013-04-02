@@ -19,6 +19,9 @@ namespace BlackHoleLoans
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Combat combat;
+        KeyboardState prevKeyboardState, currentKeyboardState;
+        float frameRate;
+        public bool runCombat { get; set; }
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -26,7 +29,9 @@ namespace BlackHoleLoans
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             IsMouseVisible = true;
-            combat = new Combat(Content, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth,this);
+            combat = new Combat(Content, graphics.PreferredBackBufferHeight,
+                graphics.PreferredBackBufferWidth,this);
+            currentKeyboardState = Keyboard.GetState();
         }
 
         /// <summary>
@@ -72,9 +77,12 @@ namespace BlackHoleLoans
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
+            prevKeyboardState = currentKeyboardState;
+            currentKeyboardState = Keyboard.GetState();
+            frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.Window.Title = "BlackHoleLoans(" + (int)frameRate + ")";
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
             // TODO: Add your update logic here
             combat.Update(gameTime);
             base.Update(gameTime);

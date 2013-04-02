@@ -17,6 +17,7 @@ namespace BlackHoleLoans
         public string Name { get; set; }
         public Skill skillA{get;set;}
         public Skill skillB{get;set;}
+        //creates a player with skills
         public Player(int atk, int def, int con, string n,Skill a, Skill b)//also pass in array of textures (player dir movement) & an int (for which class
         //the player is?) - don't need anything for the race
         {
@@ -25,7 +26,7 @@ namespace BlackHoleLoans
             skillA = a;
             skillB = b;
         }
-
+      
         public PlayerStatistics GetPlayerStats()
         {
             return playerStats;
