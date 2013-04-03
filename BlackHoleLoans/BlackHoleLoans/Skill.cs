@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlackHoleLoans
 {
-    class Skill
+    public class Skill
     {
         [Flags]
         public enum Skills {Fire, Ice, Heal }

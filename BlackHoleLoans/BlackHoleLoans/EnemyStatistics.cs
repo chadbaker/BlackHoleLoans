@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlackHoleLoans
 {
-    class EnemyStatistics
+    public class EnemyStatistics
     {
         //int attack, defence, concentration;
         //int health, level, experience;
@@ -46,12 +46,12 @@ namespace BlackHoleLoans
                 health = TotalHealth;
             }
         }
-        public EnemyStatistics(int atk, int def, int con)
+        public EnemyStatistics(int atk, int def, int con,int h)
         {
             attack = atk;
             defence = def;
             concentration = con;
-            health = 10;
+            health = h;
             TotalHealth = health;
             level = 1;
         }

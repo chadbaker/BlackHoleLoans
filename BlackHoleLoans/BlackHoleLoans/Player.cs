@@ -10,21 +10,23 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BlackHoleLoans
 {
-    class Player
+    public class Player
     {
         PlayerStatistics playerStats;
         Texture2D[] playerDirMovement;
         public string Name { get; set; }
         public Skill skillA{get;set;}
         public Skill skillB{get;set;}
+        public bool isFainted { get; set; }
         //creates a player with skills
-        public Player(int atk, int def, int con, string n,Skill a, Skill b)//also pass in array of textures (player dir movement) & an int (for which class
+        public Player(int atk, int def, int con, int health,string n,Skill a, Skill b)//also pass in array of textures (player dir movement) & an int (for which class
         //the player is?) - don't need anything for the race
         {
-            playerStats = new PlayerStatistics(atk, def, con);
+            playerStats = new PlayerStatistics(atk, def, con,health);
             Name = n;
             skillA = a;
             skillB = b;
+            isFainted = false;
         }
       
         public PlayerStatistics GetPlayerStats()
@@ -35,7 +37,7 @@ namespace BlackHoleLoans
         public int ExecuteBasicAttack(Enemy e)
         {
             int damage = playerStats.Attack - e.GetEnemyStats().Defence;
-            if (damage < 0)
+            if (damage <= 0)
             {
                 damage = 1;
             }

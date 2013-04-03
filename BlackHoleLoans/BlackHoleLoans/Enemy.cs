@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BlackHoleLoans
 {
-    class Enemy
+    public class Enemy
     {
         public string Name { get;set; }
         EnemyStatistics enemyStats;
@@ -21,30 +21,33 @@ namespace BlackHoleLoans
         public Skill skillB { get; set; }
         Random random;
         //creates an enemy without skills
-        public Enemy(int att, int def, int con, string n)
+        public Enemy(int att, int def, int con,int health, string n)
         {
-            enemyStats = new EnemyStatistics(att,def,con);
+            enemyStats = new EnemyStatistics(att,def,con,health);
             Name = n;
             whichAi = 1;
+            isDead = false;
         }
         //creates an enemy with 1 skill
-        public Enemy(int att, int def, int con, string n,Skill a)
+        public Enemy(int att, int def, int con,int health, string n,Skill a)
         {
-            enemyStats = new EnemyStatistics(att, def, con);
+            enemyStats = new EnemyStatistics(att, def, con,health);
             Name = n;
             skillA = a;
             random = new Random();
             whichAi = 2;
+            isDead = false;
         }
         //creates an enemy with 2 skills
-        public Enemy(int att, int def, int con, string n, Skill a,Skill b)
+        public Enemy(int att, int def, int con,int health, string n, Skill a,Skill b)
         {
-            enemyStats = new EnemyStatistics(att, def, con);
+            enemyStats = new EnemyStatistics(att, def, con,health);
             Name = n;
             skillA = a;
             skillB = b;
             random = new Random();
             whichAi = 3;
+            isDead = false;
         }
 
         public EnemyStatistics GetEnemyStats()
@@ -114,7 +117,7 @@ namespace BlackHoleLoans
             if (chosenSkill.isDamage)
             {
                 int damage = (int)(enemyStats.Concentration * chosenSkill.skillRatio) - p.GetPlayerStats().Defence;
-                if (damage < 0)
+                if (damage <= 0)
                 {
                     damage = 1;
                 }

@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BlackHoleLoans
 {
-    class Combat
+    public class Combat
     {
         #region global variables
         private Game1 maingame;
@@ -34,7 +34,7 @@ namespace BlackHoleLoans
         #endregion
         public enum MenuOption {Fight=1,Run=2,Attack=3,SkillA=4,SkillB=5}
 
-        public Combat(ContentManager content,int height, int width,Game1 game)
+        public Combat(ContentManager content,int height, int width,Game1 game,Player p,Enemy e)
         {
             _content = content;
             _height = height;
@@ -43,8 +43,8 @@ namespace BlackHoleLoans
             menuoption = (int)MenuOption.Fight;
             prevKeyboardState = Keyboard.GetState();
             currentKeyboardState = Keyboard.GetState();
-            dummyplayer = new Player(5,5,5,"Player",new Skill(Skill.Skills.Fire),new Skill(Skill.Skills.Heal));
-            dummyenemy = new Enemy(8,1,2,"Dummy",new Skill(Skill.Skills.Fire),new Skill(Skill.Skills.Heal));
+            dummyplayer = p;
+            dummyenemy = e;
             messageQueue = new Queue<string>();
         }
 
@@ -407,9 +407,10 @@ namespace BlackHoleLoans
                     +" health!");
             }
 
-            else if (dummyplayer.GetPlayerStats().Health == 0)
+            else if (dummyplayer.GetPlayerStats().Health == 0&& dummyplayer.isFainted==false)
             {
                 AddMessage(dummyplayer.Name + " fainted!");
+                dummyplayer.isFainted = true;
             }
             //end if block dealing with the player
             //if block dealing with the enemy

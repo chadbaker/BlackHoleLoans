@@ -18,10 +18,13 @@ namespace BlackHoleLoans
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Combat combat;
+        public Combat combat;
+        CombatTest combattest;
         KeyboardState prevKeyboardState, currentKeyboardState;
         float frameRate;
         public bool runCombat { get; set; }
+        public Player player { get; set; }
+        public Enemy enemy { get; set; }
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -29,9 +32,9 @@ namespace BlackHoleLoans
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             IsMouseVisible = true;
-            combat = new Combat(Content, graphics.PreferredBackBufferHeight,
-                graphics.PreferredBackBufferWidth,this);
             currentKeyboardState = Keyboard.GetState();
+            runCombat = false;
+            combattest = new CombatTest(Content,this);
         }
 
         /// <summary>
@@ -55,8 +58,8 @@ namespace BlackHoleLoans
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            combat.SetSpriteBatch(spriteBatch);
-            combat.LoadContent();
+            combattest.SetSpritebatch(spriteBatch);
+            combattest.LoadContent();
             // TODO: use this.Content to load your game content here
         }
 
@@ -84,7 +87,14 @@ namespace BlackHoleLoans
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             // TODO: Add your update logic here
-            combat.Update(gameTime);
+            if (runCombat)
+            {
+                combat.Update(gameTime);
+            }
+            else
+            {
+                combattest.Update(gameTime);
+            }
             base.Update(gameTime);
         }
 
@@ -96,7 +106,14 @@ namespace BlackHoleLoans
         {
             GraphicsDevice.Clear(Color.Green);
             spriteBatch.Begin();
-            combat.Draw(gameTime);
+            if (runCombat)
+            {
+                combat.Draw(gameTime);
+            }
+            else
+            {
+                combattest.Draw();
+            }
             spriteBatch.End();
             // TODO: Add your drawing code here
 

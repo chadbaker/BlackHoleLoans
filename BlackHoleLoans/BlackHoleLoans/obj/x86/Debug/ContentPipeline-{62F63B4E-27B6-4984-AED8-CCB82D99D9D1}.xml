@@ -64,6 +64,24 @@
       <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\healthbar.xnb</Output>
       <Time>2013-03-28T23:12:59.0010385-07:00</Time>
     </Item>
+    <Item>
+      <Source>CombatTest\arrowleft.png</Source>
+      <Name>CombatTest\arrowleft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\CombatTest\arrowleft.xnb</Output>
+      <Time>2013-04-01T20:33:18.737629-07:00</Time>
+    </Item>
+    <Item>
+      <Source>CombatTest\arrowright.png</Source>
+      <Name>CombatTest\arrowright</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\CombatTest\arrowright.xnb</Output>
+      <Time>2013-04-01T20:33:33.6304808-07:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{62F63B4E-27B6-4984-AED8-CCB82D99D9D1}</ContentProjectGUID>

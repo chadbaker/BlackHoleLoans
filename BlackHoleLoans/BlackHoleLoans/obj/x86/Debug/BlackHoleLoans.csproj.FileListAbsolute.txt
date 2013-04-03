@@ -11,3 +11,5 @@ C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHo
 C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatfontsmall.xnb
 C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\dummyenemytexture.xnb
 C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\healthbar.xnb
+C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\CombatTest\arrowleft.xnb
+C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\CombatTest\arrowright.xnb
