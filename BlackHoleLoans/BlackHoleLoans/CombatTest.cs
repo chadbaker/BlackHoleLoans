@@ -189,20 +189,20 @@ namespace BlackHoleLoans
             {
                 if (isPlayer)
                 {
-                    playerSkillA = new Skill((Skill.Skills)Skill.Skills.ToObject(typeof(Skill.Skills), pskillA));
-                    playerSkillB = new Skill((Skill.Skills)Skill.Skills.ToObject(typeof(Skill.Skills), pskillB));
-                    game.player = new Player(playerAttack, playerDefense, playerConcentration, playerHealth, "Player", playerSkillA, playerSkillB);
+                    playerSkillA = new Skill((Skills)Skills.ToObject(typeof(Skills), pskillA));
+                    playerSkillB = new Skill((Skills)Skills.ToObject(typeof(Skills), pskillB));
+                    //game.player = new Player(playerAttack, playerDefense, playerConcentration, playerHealth, "Player", playerSkillA, playerSkillB);
                     isPlayer = false;
                 }
                 else
                 {
-                    enemySkillA = new Skill((Skill.Skills)Skill.Skills.ToObject(typeof(Skill.Skills), eskillA));
-                    enemySkillB = new Skill((Skill.Skills)Skill.Skills.ToObject(typeof(Skill.Skills), eskillB));
-                    game.enemy = new Enemy(enemyAttack, enemyDefense,enemyConcentration, enemyHealth, "Dummy", enemySkillA, enemySkillB);
+                    enemySkillA = new Skill((Skills)Skills.ToObject(typeof(Skills), eskillA));
+                    enemySkillB = new Skill((Skills)Skills.ToObject(typeof(Skills), eskillB));
+                    /*game.enemy = new Enemy(enemyAttack, enemyDefense,enemyConcentration, enemyHealth, "Dummy", enemySkillA, enemySkillB);
                     game.combat = new Combat(_content, height,width, game, game.player, game.enemy);
                     game.combat.SetSpriteBatch(spriteBatch);
                     game.combat.LoadContent();
-                    game.runCombat = true;
+                    game.runCombat = true;*/
                 }
             }
             #endregion
@@ -210,7 +210,6 @@ namespace BlackHoleLoans
 
         public void Draw()
         {
-            String skillName;
             color = Color.White;
             #region player or enemy
             if (isPlayer)
@@ -221,8 +220,8 @@ namespace BlackHoleLoans
                 spriteBatch.DrawString(combatfontsmall, playerDefense + "", new Vector2(4 * width / 8, 6 * height / 15), Color.White);
                 spriteBatch.DrawString(combatfontsmall, playerConcentration + "", new Vector2(4 * width / 8, 8 * height / 15), Color.White);
                 spriteBatch.DrawString(combatfontsmall, playerHealth+ "", new Vector2(4 * width / 8, 10 * height / 15), Color.White);
-                spriteBatch.DrawString(combatfontsmall, Skill.Skills.GetName(typeof(Skill.Skills),pskillA), new Vector2(4 * width / 8, 12 * height / 15), Color.White);
-                spriteBatch.DrawString(combatfontsmall, Skill.Skills.GetName(typeof(Skill.Skills),pskillB), new Vector2(4 * width / 8, 14 * height / 15), Color.White);
+                spriteBatch.DrawString(combatfontsmall, Skills.GetName(typeof(Skills),pskillA), new Vector2(4 * width / 8, 12 * height / 15), Color.White);
+                spriteBatch.DrawString(combatfontsmall, Skills.GetName(typeof(Skills),pskillB), new Vector2(4 * width / 8, 14 * height / 15), Color.White);
             }
             else
             {
@@ -232,8 +231,8 @@ namespace BlackHoleLoans
                 spriteBatch.DrawString(combatfontsmall, playerDefense + "", new Vector2(4 * width / 8, 6 * height / 15), Color.White);
                 spriteBatch.DrawString(combatfontsmall, playerConcentration + "", new Vector2(4 * width / 8, 8 * height / 15), Color.White);
                 spriteBatch.DrawString(combatfontsmall, playerHealth+ "", new Vector2(4 * width / 8, 10 * height / 15), Color.White);
-                spriteBatch.DrawString(combatfontsmall, Skill.Skills.GetName(typeof(Skill.Skills),eskillA), new Vector2(4 * width / 8, 12 * height / 15), Color.White);
-                spriteBatch.DrawString(combatfontsmall, Skill.Skills.GetName(typeof(Skill.Skills),eskillB), new Vector2(4 * width / 8, 14 * height / 15), Color.White);
+                spriteBatch.DrawString(combatfontsmall, Skills.GetName(typeof(Skills),eskillA), new Vector2(4 * width / 8, 12 * height / 15), Color.White);
+                spriteBatch.DrawString(combatfontsmall, Skills.GetName(typeof(Skills),eskillB), new Vector2(4 * width / 8, 14 * height / 15), Color.White);
             }
             #endregion
             #region arrows

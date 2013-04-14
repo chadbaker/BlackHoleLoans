@@ -5,10 +5,10 @@ using System.Text;
 
 namespace BlackHoleLoans
 {
+    [Flags]
+    public enum Skills { Fire, Ice, Heal }
     public class Skill
     {
-        [Flags]
-        public enum Skills {Fire, Ice, Heal }
         public float skillRatio { get; set; }
         public string Name { get; set; }
         public bool isDamage;

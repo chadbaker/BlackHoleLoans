@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatmenubase.xnb</Output>
-      <Time>2013-03-28T17:26:45.3258522-07:00</Time>
+      <Time>2013-04-12T22:57:52.8898223-07:00</Time>
     </Item>
     <Item>
       <Source>Combat\combatfontbig.spritefont</Source>
@@ -26,7 +26,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\cursor.xnb</Output>
-      <Time>2013-03-24T11:29:36.5514528-07:00</Time>
+      <Time>2013-04-12T20:29:53.8669713-07:00</Time>
     </Item>
     <Item>
       <Source>Combat\dummyplayertexture.png</Source>
@@ -81,6 +81,33 @@
       <Options>None</Options>
       <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\CombatTest\arrowright.xnb</Output>
       <Time>2013-04-01T20:33:33.6304808-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Combat\verysmallfont.spritefont</Source>
+      <Name>Combat\verysmallfont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\verysmallfont.xnb</Output>
+      <Time>2013-04-11T23:54:10.2791362-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Combat\gray.png</Source>
+      <Name>Combat\gray</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\gray.xnb</Output>
+      <Time>2013-04-13T12:54:08.9441462-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Combat\messagebase.png</Source>
+      <Name>Combat\messagebase</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\messagebase.xnb</Output>
+      <Time>2013-04-13T16:35:48.5604346-07:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

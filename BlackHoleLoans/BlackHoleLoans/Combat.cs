@@ -20,11 +20,15 @@ namespace BlackHoleLoans
         private SpriteBatch spriteBatch;
         private ContentManager _content;
         private int _height, _width,menuoption;
-        private int lastPlayerHealth,lastEnemyHealth;
-        private Texture2D combatmenubase,cursor,dummyplayertexture,dummyenemytexture,healthbar;
-        private SpriteFont combatfontbig,combatfontsmall;
-        private Player dummyplayer;
-        private Enemy dummyenemy;
+        private int selectedPlayerAction;
+        private int highestMenuOption,lowestMenuOption,menuLayer;
+        private Texture2D combatmenubase,cursor,dummyplayertexture,dummyenemytexture,healthbar,gray,messagebase;
+        private SpriteFont combatfontbig,combatfontsmall,verysmallfont;
+        private Player selectedPlayer,enemySelectedPlayer;
+        private Enemy selectedEnemy;
+        private Player[] thePlayers;
+        private Enemy[] theEnemies;
+        private Random random;
         KeyboardState prevKeyboardState, currentKeyboardState;
         private static readonly TimeSpan menuinterval = TimeSpan.FromMilliseconds(100);
         private static readonly TimeSpan messageinterval = TimeSpan.FromMilliseconds(1500);
@@ -34,18 +38,26 @@ namespace BlackHoleLoans
         #endregion
         public enum MenuOption {Fight=1,Run=2,Attack=3,SkillA=4,SkillB=5}
 
-        public Combat(ContentManager content,int height, int width,Game1 game,Player p,Enemy e)
+        public Combat(ContentManager content,int height, int width,Game1 game,Player[] p,Enemy[] e)
         {
             _content = content;
             _height = height;
             _width = width;
             maingame = game;
+            random = new Random();
+            highestMenuOption = 1;
+            lowestMenuOption = 3;
+            menuLayer = 0;
             menuoption = (int)MenuOption.Fight;
             prevKeyboardState = Keyboard.GetState();
             currentKeyboardState = Keyboard.GetState();
-            dummyplayer = p;
-            dummyenemy = e;
+            thePlayers = p;
+            theEnemies = e;
+            selectedPlayer = new Player(5,5,5,25,"Player",new Skill(Skills.Fire),
+                new Skill(Skills.Heal));
+            selectedEnemy = new Enemy(5, 5, 5, 10, "Dummy");
             messageQueue = new Queue<string>();
+            AddMessage("Player Turn");
         }
 
         public void LoadContent()
@@ -56,10 +68,13 @@ namespace BlackHoleLoans
             dummyplayertexture = _content.Load<Texture2D>("Combat/dummyplayertexture");
             dummyenemytexture = _content.Load<Texture2D>("Combat/dummyenemytexture");
             healthbar = _content.Load<Texture2D>("Combat/healthbar");
+            gray = _content.Load<Texture2D>("Combat/gray");
+            messagebase = _content.Load<Texture2D>("Combat/messagebase");
             #endregion 
             #region fonts
             combatfontbig = _content.Load<SpriteFont>("Combat/combatfontbig");
             combatfontsmall = _content.Load<SpriteFont>("Combat/combatfontsmall");
+            verysmallfont = _content.Load<SpriteFont>("Combat/verysmallfont");
             #endregion
         }
 
@@ -70,107 +85,224 @@ namespace BlackHoleLoans
             #region combat menu logic
             if (executeMenuLogic)
             {
-                if (prevKeyboardState.IsKeyUp(Keys.Left) &&
-                    currentKeyboardState.IsKeyDown(Keys.Left) &&
-                    menuoption == (int)MenuOption.Run)
+                UpdateMenuOption();
+                if (menuLayer == 0)
                 {
-                    menuoption = (int)MenuOption.Fight; 
+                    LayerZeroAction(gameTime);
                 }
-                else if (prevKeyboardState.IsKeyUp(Keys.Right) &&
-                    currentKeyboardState.IsKeyDown(Keys.Right) &&
-                    menuoption == (int)MenuOption.Fight)
+                if (menuLayer == 1)
                 {
-                    menuoption = (int)MenuOption.Run; 
+                    LayerOneAction(gameTime);
                 }
-                if (menuoption == (int)MenuOption.Fight &&
-                    prevKeyboardState.IsKeyUp(Keys.Z) &&
-                    currentKeyboardState.IsKeyDown(Keys.Z))
+                if (menuLayer == 2)
                 {
-                    lastMenuChoiceTime = gameTime.TotalGameTime;
-                    menuoption = (int)MenuOption.Attack; ;
+                    LayerTwoAction(gameTime);
                 }
-                if (menuoption == (int)MenuOption.Run &&
-                    prevKeyboardState.IsKeyUp(Keys.Z) &&
-                    currentKeyboardState.IsKeyDown(Keys.Z))
+                if (menuLayer == 3)
                 {
-                    AddMessage("Player ran away!");
+                    LayerThreeAction(gameTime);
                 }
-                if (menuoption == (int)MenuOption.Attack &&
-                    prevKeyboardState.IsKeyUp(Keys.Z) &&
-                    currentKeyboardState.IsKeyDown(Keys.Z))
-                {
-                    if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
-                    {
-                        StartTurn(gameTime,MenuOption.Attack);
-                        menuoption = (int)MenuOption.Fight;
-                    }
-                }
-
-                if (menuoption == (int)MenuOption.SkillA &&
-                    prevKeyboardState.IsKeyUp(Keys.Z) &&
-                    currentKeyboardState.IsKeyDown(Keys.Z))
-                {
-                    if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
-                    {
-                        StartTurn(gameTime,MenuOption.SkillA);
-                        menuoption = (int)MenuOption.Fight;
-                    }
-                }
-
-                if (menuoption == (int)MenuOption.SkillB &&
-                    prevKeyboardState.IsKeyUp(Keys.Z) &&
-                    currentKeyboardState.IsKeyDown(Keys.Z))
-                {
-                    if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
-                    {
-                        StartTurn(gameTime, MenuOption.SkillB);
-                        menuoption = (int)MenuOption.Fight;
-                    }
-                }
-
-                if ((menuoption == (int)MenuOption.Attack ||
-                    menuoption == (int)MenuOption.SkillA ||
-                    menuoption == (int)MenuOption.SkillB) &&
-                    prevKeyboardState.IsKeyUp(Keys.X) &&
-                    currentKeyboardState.IsKeyDown(Keys.X))
-                {
-                    menuoption = (int)MenuOption.Fight;
-                }
-
-                if(menuoption==(int)MenuOption.Attack&&
-                    prevKeyboardState.IsKeyUp(Keys.Down)&&
-                    currentKeyboardState.IsKeyDown(Keys.Down))
-                {
-                    lastMenuChoiceTime = gameTime.TotalGameTime;
-                    menuoption = (int)MenuOption.SkillA;
-                }
-
-                if(menuoption==(int)MenuOption.SkillA&&
-                    prevKeyboardState.IsKeyUp(Keys.Down)&&
-                    currentKeyboardState.IsKeyDown(Keys.Down))
-                {
-                    if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
-                    {
-                        menuoption = (int)MenuOption.SkillB;
-                    }
-                }
-
-                if (menuoption == (int)MenuOption.SkillA &&
-                    prevKeyboardState.IsKeyUp(Keys.Up)&&
-                    currentKeyboardState.IsKeyDown(Keys.Up))
-                {
-                    menuoption = (int)MenuOption.Attack;
-                }
-
-                if(menuoption == (int)MenuOption.SkillB&&
-                    prevKeyboardState.IsKeyUp(Keys.Up)&&
-                    currentKeyboardState.IsKeyDown(Keys.Up))
-                {
-                    menuoption = (int)MenuOption.SkillA;
-                }
-
+            }
+            if (AllPlayersHaveGone())
+            {
+                ChangeTurns(gameTime);
             }
             #endregion
+        }
+
+        private bool AllPlayersHaveGone()
+        {
+            for (int i = 0; i < thePlayers.Length;i++)
+            {
+                if (!thePlayers[i].hasGone)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void ChangeTurns(GameTime gameTime)
+        {
+            StartEnemyTurn(gameTime);
+            AddMessage("Player Turn");
+            for (int i = 0; i < thePlayers.Length; i++)
+            {
+                thePlayers[i].hasGone = false;
+            }
+        }
+
+        private void UpdateMenuOption()
+        {
+            if (IsKeyClicked(Keys.Down)&&menuoption!=lowestMenuOption)
+            {
+                menuoption++;
+            }
+            if (IsKeyClicked(Keys.Up)&&menuoption!=highestMenuOption)
+            {
+                menuoption--;
+            }
+        }
+
+        private void LayerZeroAction(GameTime gameTime)
+        {
+            if (menuoption == 1 && IsKeyClicked(Keys.Z)&&
+                thePlayers[0].hasGone == false&&!thePlayers[0].isFainted)
+            {
+                selectedPlayer = thePlayers[0];
+                //thePlayers[0].hasGone = true;
+                lastMenuChoiceTime = gameTime.TotalGameTime;
+                ChangeLayers(1);
+            }
+            if (menuoption == 2 && IsKeyClicked(Keys.Z)&&
+                thePlayers[1].hasGone == false && !thePlayers[1].isFainted)
+            {
+                selectedPlayer = thePlayers[1];
+                //thePlayers[1].hasGone = true;
+                lastMenuChoiceTime = gameTime.TotalGameTime;
+                ChangeLayers(1);
+            }
+            if (menuoption == 3 && IsKeyClicked(Keys.Z)&&
+                thePlayers[2].hasGone == false && !thePlayers[2].isFainted)
+            {
+                selectedPlayer = thePlayers[2];
+                lastMenuChoiceTime = gameTime.TotalGameTime;
+                ChangeLayers(1);
+            }
+        }
+
+        private void LayerThreeAction(GameTime gameTime)
+        {
+            if (menuoption == 1 &&
+                IsKeyClicked(Keys.Z))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    selectedEnemy = theEnemies[0];
+                    ExecutePlayerAction(selectedPlayerAction,gameTime);
+                    selectedPlayer.hasGone = true;
+                }
+            }
+
+            if (menuoption == 2 &&
+                IsKeyClicked(Keys.Z))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    selectedEnemy = theEnemies[1];
+                    ExecutePlayerAction(selectedPlayerAction,gameTime);
+                    selectedPlayer.hasGone = true;
+                }
+            }
+
+            if (menuoption == 3 &&
+                IsKeyClicked(Keys.Z))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    selectedEnemy = theEnemies[2];
+                    ExecutePlayerAction(selectedPlayerAction,gameTime);
+                    selectedPlayer.hasGone = true;
+                }
+            }
+            if (IsKeyClicked(Keys.X))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    ChangeLayers(2);
+                }
+            }
+        }
+
+        private void LayerTwoAction(GameTime gameTime)
+        {
+            if (menuoption == 1 &&
+                IsKeyClicked(Keys.Z))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    lastMenuChoiceTime = gameTime.TotalGameTime;
+                    selectedPlayerAction = 1;
+                    ChangeLayers(3);
+                }
+            }
+
+            if (menuoption == 2 &&
+                IsKeyClicked(Keys.Z))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    lastMenuChoiceTime = gameTime.TotalGameTime;
+                    selectedPlayerAction = 2;
+                    ChangeLayers(3);
+                }
+            }
+
+            if (menuoption == 3 &&
+                IsKeyClicked(Keys.Z))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    lastMenuChoiceTime = gameTime.TotalGameTime;
+                    selectedPlayerAction = 3;
+                    ChangeLayers(3);
+                }
+            }
+            if (IsKeyClicked(Keys.X))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    ChangeLayers(1);
+                }
+            }
+        }
+
+        private void LayerOneAction(GameTime gameTime)
+        {
+            if (menuoption == 1  &&
+                IsKeyClicked(Keys.Z))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    lastMenuChoiceTime = gameTime.TotalGameTime;
+                    ChangeLayers(2);
+                }
+            }
+            if (menuoption == 2 &&
+                IsKeyClicked(Keys.Z))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    AddMessage("Player ran away!");
+                    ChangeLayers(0);
+                }
+            }
+            if (IsKeyClicked(Keys.X))
+            {
+                if (lastMenuChoiceTime + menuinterval < gameTime.TotalGameTime)
+                {
+                    ChangeLayers(0);
+                    //selectedPlayer.hasGone = false;
+                }
+            }
+        }
+
+        private void ChangeLayers(int layer)
+        {
+            menuoption = 1;
+            if (layer == 1)
+            {
+                lowestMenuOption = 2;
+            }
+            else if (layer == 2)
+            {
+                lowestMenuOption = theEnemies.Length;
+            }
+            else
+            {
+                lowestMenuOption = 3;
+            }
+            menuLayer = layer;
         }
 
         public void Draw(GameTime gameTime)
@@ -194,9 +326,9 @@ namespace BlackHoleLoans
 
         public void DrawMessage(String message)
         {
-            spriteBatch.Draw(combatmenubase, new Rectangle(0,0,_width,combatmenubase.Height/4),Color.White);
+            spriteBatch.Draw(messagebase, new Rectangle(0,0,_width,messagebase.Height),Color.White);
             Vector2 textCenter = combatfontsmall.MeasureString(message)*.5f;
-            spriteBatch.DrawString(combatfontsmall, message, new Vector2(_width/2 - textCenter.X, combatmenubase.Height / 8 - textCenter.Y), Color.White);
+            spriteBatch.DrawString(combatfontsmall, message, new Vector2(_width/2 - textCenter.X, messagebase.Height/2 - textCenter.Y), Color.White);
         }
 
         public void AddMessage(String m)
@@ -204,149 +336,271 @@ namespace BlackHoleLoans
             messageQueue.Enqueue(m);
         }
 
-        public void StartTurn(GameTime gameTime, MenuOption menuOption)
+        private void StartEnemyTurn(GameTime gameTime)
+        {
+            AddMessage("Enemy Turn");
+            for (int i = 0; i < theEnemies.Length;i++)
+            {
+                SelectPlayer();
+                ExecuteEnemyAction(theEnemies[i],gameTime);
+            }
+        }
+
+        private void ExecuteEnemyAction(Enemy e,GameTime gameTime)
         {
             lastMessageTime = gameTime.TotalGameTime;
-            lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
-            lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
-
-            if (menuOption == MenuOption.Attack)
+            SetHealthReferencePoint();
+            if (e.GetEnemyStats().Health > 0)
             {
-                dummyplayer.ExecuteBasicAttack(dummyenemy);
-                AddMessage(dummyplayer.Name+" attacked " + dummyenemy.Name+"!");
-            }
-            else if(menuOption == MenuOption.SkillA)
-            {
-                dummyplayer.ExecuteSkillA(dummyenemy,dummyplayer);
-                AddMessage(dummyplayer.Name + " used " + dummyplayer.skillA.Name+"!");
-            }
-
-            else if(menuOption == MenuOption.SkillB)
-            {
-                dummyplayer.ExecuteSkillB(dummyenemy,dummyplayer);
-                AddMessage(dummyplayer.Name + " used " + dummyplayer.skillB.Name + "!");
-            }
-
-            DetermineMessage();
-
-            if (dummyenemy.GetEnemyStats().Health > 0)
-            {
-                lastPlayerHealth = dummyplayer.GetPlayerStats().Health;
-                lastEnemyHealth = dummyenemy.GetEnemyStats().Health;
-                if (dummyenemy.whichAi == 1)
+                SetHealthReferencePoint();
+                if (e.whichAi == 1)
                 {
-                    dummyenemy.ExecuteAI1(dummyplayer,dummyenemy);
-                    AddMessage(dummyenemy.Name + " attacked " + dummyplayer.Name + "!");
+                    e.ExecuteAI1(enemySelectedPlayer);
+                    AddMessage(e.Name + " attacked " + enemySelectedPlayer.Name + "!");
                 }
-                else if (dummyenemy.whichAi == 2)
+                else if (e.whichAi == 2)
                 {
-                    //need to check if an attack or skill is used
-                    chosenEnemySkill=dummyenemy.ExecuteAI2(dummyplayer,dummyenemy);
+                    chosenEnemySkill = e.ExecuteAI2(enemySelectedPlayer, e);
                     if (chosenEnemySkill != null)
                     {
-                        AddMessage(dummyenemy.Name + " cast " + dummyenemy.skillA.Name + "!");
+                        AddMessage(e.Name + " cast " + e.skillA.Name + "!");
                     }
                     else
                     {
-                        AddMessage(dummyenemy.Name + " attacked " + dummyplayer.Name + "!");
+                        AddMessage(e.Name + " attacked " + enemySelectedPlayer.Name + "!");
                     }
                 }
-                else if (dummyenemy.whichAi == 3)
+                else if (e.whichAi == 3)
                 {
-                    chosenEnemySkill = dummyenemy.ExecuteAI3(dummyplayer,dummyenemy);
-                    AddMessage(dummyenemy.Name + " cast " + chosenEnemySkill.Name + "!");
-                }
-                DetermineMessage();
+                    chosenEnemySkill = e.ExecuteAI3(enemySelectedPlayer, e);
+                    AddMessage(e.Name + " cast " + chosenEnemySkill.Name + "!");
+                } 
+                DeterminePlayerMessages(enemySelectedPlayer);
+                DetermineOtherMessages(enemySelectedPlayer);
+            }
+        }
+
+        //used to select a player for enemies to attack
+        private void SelectPlayer()
+        {
+            enemySelectedPlayer = thePlayers[random.Next(0,2)];
+            while(enemySelectedPlayer.isFainted)
+            {
+                enemySelectedPlayer = thePlayers[random.Next(0, 2)];
+            }
+        }
+
+        private void ExecutePlayerAction(int option,GameTime gameTime)
+        {
+            SetHealthReferencePoint();
+            lastMessageTime = gameTime.TotalGameTime;
+            if (option == 1)
+            {
+                selectedPlayer.ExecuteBasicAttack(selectedEnemy);
+                AddMessage(selectedPlayer.Name + " attacked " + selectedEnemy.Name + "!");
+            }
+            else if (option == 2)
+            {
+                selectedPlayer.ExecuteSkillA(selectedEnemy, selectedPlayer);
+                AddMessage(selectedPlayer.Name + " used " + selectedPlayer.skillA.Name + "!");
+            }
+
+            else if (option == 3)
+            {
+                selectedPlayer.ExecuteSkillB(selectedEnemy, selectedPlayer);
+                AddMessage(selectedPlayer.Name + " used " + selectedPlayer.skillB.Name + "!");
+            }
+            DetermineEnemyMessages();
+            DetermineOtherMessages(selectedPlayer);
+            ChangeLayers(0);
+        }
+
+        private void SetHealthReferencePoint()
+        {
+            for (int i = 0; i < thePlayers.Length; i++)
+            {
+                thePlayers[i].lastPlayerHealth = thePlayers[i].GetPlayerStats().Health;
+            }
+            for (int i = 0; i < theEnemies.Length; i++)
+            {
+                theEnemies[i].lastEnemyHealth = theEnemies[i].GetEnemyStats().Health;
             }
         }
 
         public void DrawCombatMenu()
         {
-            Vector2 textSize1 = combatfontbig.MeasureString("FIGHT");
-            Vector2 textCenter1 = combatfontbig.MeasureString("FIGHT")*.5f;
-            Vector2 textCenter2 = combatfontbig.MeasureString("RUN")*.5f;
+            Vector2 textSize1 = combatfontsmall.MeasureString("FIGHT");
+            Vector2 textCenter1 = combatfontsmall.MeasureString("FIGHT")*.5f;
+            Vector2 textCenter2 = combatfontsmall.MeasureString("RUN")*.5f;
             Vector2 textCenter3 = combatfontsmall.MeasureString("Attack") * .5f;
-            spriteBatch.Draw(combatmenubase, new Rectangle(0, 4*_height/6,
-                _width, combatmenubase.Height), 
-                Color.White);
-            spriteBatch.DrawString(combatfontbig, "FIGHT", new Vector2(_width/8, 5*_height/6-textCenter1.Y), Color.White);
-            spriteBatch.DrawString(combatfontbig, "RUN", new Vector2(6*_width/8, 5*_height/6-textCenter2.Y), Color.White);
+            DrawMainMenu(textCenter1, textCenter2, textSize1);
+            if (menuLayer == 1||menuLayer==0)
+            {
+                DrawLayerOne();
+            }
+            if (menuLayer == 2)
+            {
+                DrawLayerTwo(textSize1, textCenter3);
+            }
+            if (menuLayer == 3)
+            {
+                DrawLayerThree();
+            }
             if (executeMenuLogic)
             {
-                if(menuoption==(int)MenuOption.Attack||menuoption==(int)MenuOption.SkillA||menuoption==(int)MenuOption.SkillB)
+                if (menuLayer != 0)
                 {
-                    spriteBatch.DrawString(combatfontsmall, "Attack", 
-                        new Vector2(_width/8+textSize1.X+cursor.Width, 
-                            31*_height/42-textCenter3.Y), Color.White);
-                    spriteBatch.DrawString(combatfontsmall, dummyplayer.skillA.Name,
-                        new Vector2(_width / 8 + textSize1.X + cursor.Width,
-                            35 * _height / 42 - textCenter3.Y), Color.White);
-                    spriteBatch.DrawString(combatfontsmall, dummyplayer.skillB.Name,
-                        new Vector2(_width / 8 + textSize1.X + cursor.Width,
-                            39 * _height / 42 - textCenter3.Y), Color.White);
+                    DrawMenuCursor(textCenter1, textCenter3);
                 }
-                if (menuoption == (int)MenuOption.Fight)
+                else
                 {
-                    spriteBatch.Draw(cursor, 
-                        new Rectangle(_width/8-cursor.Width,
-                            5*_height/6-(int)textCenter1.Y, cursor.Width, 
-                            cursor.Height), 
-                            Color.White);
+                    DrawPlayerCursor();
                 }
-                else if (menuoption == (int)MenuOption.Run)
-                {
-                    spriteBatch.Draw(cursor, 
-                        new Rectangle(6 * _width / 8 - cursor.Width,
-                            5 * _height / 6 - (int)textCenter1.Y, cursor.Width,
-                            cursor.Height),
-                            Color.White);
-                }
-                else if (menuoption == (int)MenuOption.Attack)
-                {
-                     spriteBatch.Draw(cursor, 
-                        new Rectangle(295, 31 * _height / 42 - (int)textCenter3.Y,
-                            cursor.Width / 2, cursor.Height / 2), Color.White);
-                }
-
-                else if (menuoption == (int)MenuOption.SkillA)
-                {
-                    spriteBatch.Draw(cursor,
-                        new Rectangle(295, 35 * _height / 42 - (int)textCenter3.Y,
-                            cursor.Width / 2, cursor.Height / 2), Color.White);
-                }
-
-                else if(menuoption == (int)MenuOption.SkillB)
-                {
-                    spriteBatch.Draw(cursor,
-                        new Rectangle(295, 39 * _height / 42 - (int)textCenter3.Y,
-                            cursor.Width / 2, cursor.Height / 2), Color.White);
-                }
-
             }
+        }
+
+        private void DrawPlayerCursor()
+        {
+            if (menuoption == 1)
+            {
+                spriteBatch.Draw(cursor,
+                    new Rectangle(_width / 8 - 55,
+                        47 * _height / 64, cursor.Width, cursor.Height+10),
+                        Color.White);
+            }
+            else if (menuoption == 2)
+            {
+                spriteBatch.Draw(cursor,
+                    new Rectangle(_width / 8 - 55,
+                        52 * _height / 64, cursor.Width, cursor.Height+10),
+                        Color.White);
+            }
+            else if (menuoption == 3)
+            {
+                spriteBatch.Draw(cursor,
+                   new Rectangle(_width / 8 - 55, 57 * _height / 64,
+                       cursor.Width, cursor.Height+10), Color.White);
+            }
+        }
+
+        private void DrawMenuCursor(Vector2 textCenter1, Vector2 textCenter3)
+        {
+            if (menuoption == 1)
+            {
+                spriteBatch.Draw(cursor,
+                    new Rectangle(5*_width / 8-10,
+                        12 * _height / 16 , cursor.Width-110,cursor.Height),
+                        Color.White);
+            }
+            else if (menuoption == 2)
+            {
+                spriteBatch.Draw(cursor,
+                    new Rectangle(5* _width / 8-10,
+                        13 * _height / 16, cursor.Width-110,cursor.Height),
+                        Color.White);
+            }
+            else if (menuoption == 3)
+            {
+                spriteBatch.Draw(cursor,
+                   new Rectangle(5*_width/8-10, 14 * _height / 16,
+                       cursor.Width-110, cursor.Height), Color.White);
+            }
+        }
+
+        private void DrawLayerThree()
+        {
+            for (int i = 0; i < theEnemies.Length; i++)
+            {
+                spriteBatch.DrawString(combatfontsmall, theEnemies[i].Name,
+                    new Vector2(5 * _width / 8, (12+i) * _height / 16), Color.White);
+            }
+        }
+
+        private void DrawLayerTwo(Vector2 textSize1,Vector2 textCenter3)
+        {
+            spriteBatch.DrawString(combatfontsmall, "Attack",
+                new Vector2(5 * _width / 8, 12 * _height / 16), Color.White);
+            spriteBatch.DrawString(combatfontsmall, selectedPlayer.skillA.Name,
+                new Vector2(5 * _width / 8, 13 * _height / 16), Color.White);
+            spriteBatch.DrawString(combatfontsmall, selectedPlayer.skillB.Name,
+                new Vector2(5 * _width / 8, 14 * _height / 16), Color.White);
+        }
+
+        private void DrawMainMenu(Vector2 textCenter1,Vector2 textCenter2,Vector2 textSize1)
+        {
+            spriteBatch.Draw(combatmenubase, new Rectangle(0, 4 * _height / 6,
+                _width, combatmenubase.Height),
+                Color.White);
+            for(int i = 0;i<thePlayers.Length;i++)
+            {
+                DrawHealthBars(2 * _width / 8, 3 * _height / 4 + (i * 50), thePlayers[i]);
+                spriteBatch.DrawString(combatfontsmall,
+                    thePlayers[i].GetPlayerStats().Health + "/"
+                    + thePlayers[i].GetPlayerStats().TotalHealth,
+                    new Vector2(2*_width / 8+healthbar.Width+10, 3*_height / 4+(i*50)-3) ,Color.White);
+                spriteBatch.DrawString(combatfontsmall, thePlayers[i].Name, new Vector2(_width/8, 3*_height/4 + (i*50)-7),Color.White);
+            }
+            GrayOutPlayers();
+        }
+
+        private void GrayOutPlayers()
+        {
+            if (thePlayers[0].hasGone)
+            {
+                spriteBatch.Draw(gray,
+                    new Rectangle(_width / 8 - 55,
+                        47 * _height / 64, cursor.Width, cursor.Height + 10),
+                        Color.Gray*.5f);
+            }
+            if(thePlayers[1].hasGone)
+            {
+                spriteBatch.Draw(gray,
+                    new Rectangle(_width / 8 - 55,
+                        52 * _height / 64, cursor.Width, cursor.Height + 10),
+                        Color.Gray*.5f);
+            }
+            if(thePlayers[2].hasGone)
+            {
+                spriteBatch.Draw(gray,
+                   new Rectangle(_width / 8 - 55, 57 * _height / 64,
+                       cursor.Width, cursor.Height + 10), Color.Gray*.5f);
+            }
+        }
+
+        private void DrawLayerOne()
+        {
+            spriteBatch.DrawString(combatfontsmall, "Fight",
+                new Vector2(5 * _width / 8, 12 * _height / 16), Color.White);
+            spriteBatch.DrawString(combatfontsmall, "Run",
+                new Vector2(5 * _width / 8, 13 * _height / 16), Color.White);
         }
 
         public void DrawEntities()
         {
-            spriteBatch.Draw(dummyplayertexture, new Rectangle(_width/8, _height/4,
-                dummyplayertexture.Width, dummyplayertexture.Height), Color.White);
-            spriteBatch.Draw(dummyenemytexture,
-                new Rectangle(7*_width/8-dummyenemytexture.Width, _height/4,
-                dummyenemytexture.Width,dummyenemytexture.Height), Color.White);
-            spriteBatch.DrawString(combatfontsmall, 
-                dummyplayer.GetPlayerStats().Health + "/"
-                +dummyplayer.GetPlayerStats().TotalHealth, 
-                new Vector2(_width/8, _height/4+dummyplayertexture.Height+healthbar.Height), 
-                Color.Red);
-            //uncomment for enemy health to appear on screen
-            spriteBatch.DrawString(combatfontsmall,
-                dummyenemy.GetEnemyStats().Health + "/"+dummyenemy.GetEnemyStats().TotalHealth,
-                new Vector2(7 * _width / 8 - dummyenemytexture.Width,
-                    _height / 4 + dummyplayertexture.Height+healthbar.Height),
-                    Color.Red);
-             
-            DrawHealthBars(_width /8, 7 * _width / 8 - dummyenemytexture.Width,
+            DrawPlayers();
+            DrawEnemys();
+           /* DrawHealthBars(_width /8, 7 * _width / 8 - dummyenemytexture.Width,
                 _height / 4 + dummyplayertexture.Height,
-                _height / 4 + dummyplayertexture.Height);
+                _height / 4 + dummyplayertexture.Height);*/
+        }
+
+        private void DrawEnemys()
+        {
+            for (int i = 0; i < theEnemies.Length; i++)
+            {
+                spriteBatch.Draw(dummyenemytexture,
+                    new Rectangle(7 * _width / 8 - dummyenemytexture.Width, (i + 1) * _height / 6,
+                    dummyenemytexture.Width, dummyenemytexture.Height), Color.White);
+            }
+        }
+
+        private void DrawPlayers()
+        {
+            for (int i = 0; i < thePlayers.Length; i++)
+            {
+                spriteBatch.Draw(dummyplayertexture, new Rectangle(_width / 8, (i+1)*_height / 6,
+                    dummyplayertexture.Width, dummyplayertexture.Height), Color.White);
+            }
         }
 
         public void DrawMessageQueue(GameTime gameTime)
@@ -370,74 +624,77 @@ namespace BlackHoleLoans
             }
         }
 
-        public void DrawHealthBars(int x,int x2,int y,int y2)
+        public void DrawHealthBars(int x,int y,Player p)
         {
             //player health bar
             spriteBatch.Draw(healthbar,new Rectangle(x,y,healthbar.Width,healthbar.Height),Color.Black);
             spriteBatch.Draw(healthbar, new Rectangle(x+5, y+5, healthbar.Width-10, healthbar.Height-10), Color.Gray);
             spriteBatch.Draw(healthbar, new Rectangle(x+5, y+5,
                 (int)((healthbar.Width - 10) * 
-                (double)dummyplayer.GetPlayerStats().Health / 
-                (double)dummyplayer.GetPlayerStats().TotalHealth),
-                healthbar.Height - 10), Color.Red);
-            //enemy health bar
-            spriteBatch.Draw(healthbar, new Rectangle(x2, y2, healthbar.Width, healthbar.Height), Color.Black);
-            spriteBatch.Draw(healthbar, new Rectangle(x2 + 5, y2 + 5, healthbar.Width - 10, healthbar.Height - 10), Color.Gray);
-            spriteBatch.Draw(healthbar, new Rectangle(x2 + 5, y2 + 5, (int)((healthbar.Width - 10) *
-                (double)dummyenemy.GetEnemyStats().Health /
-                (double)dummyenemy.GetEnemyStats().TotalHealth),
+                (double)p.GetPlayerStats().Health / 
+                (double)p.GetPlayerStats().TotalHealth),
                 healthbar.Height - 10), Color.Red);
         }
 
-        public void DetermineMessage()
+        private void DetermineOtherMessages(Player p)
         {
-            //if block dealing with the player
-            if (lastPlayerHealth > dummyplayer.GetPlayerStats().Health &&
-                dummyplayer.GetPlayerStats().Health != 0)
-            {
-                AddMessage(dummyplayer.Name + " took " + 
-                    (lastPlayerHealth - dummyplayer.GetPlayerStats().Health)
-                    + " damage!");
-            }
-
-            else if (lastPlayerHealth < dummyplayer.GetPlayerStats().Health)
-            {
-                AddMessage(dummyplayer.Name + " recovered " +
-                    (dummyplayer.GetPlayerStats().Health-lastPlayerHealth)
-                    +" health!");
-            }
-
-            else if (dummyplayer.GetPlayerStats().Health == 0&& dummyplayer.isFainted==false)
-            {
-                AddMessage(dummyplayer.Name + " fainted!");
-                dummyplayer.isFainted = true;
-            }
-            //end if block dealing with the player
-            //if block dealing with the enemy
-            if (lastEnemyHealth > dummyenemy.GetEnemyStats().Health &&
-                dummyenemy.GetEnemyStats().Health != 0)
-            {
-                AddMessage(dummyenemy.Name + " took " + 
-                    (lastEnemyHealth - dummyenemy.GetEnemyStats().Health) 
-                    + " damage!");
-            }
-            else if(lastEnemyHealth<dummyenemy.GetEnemyStats().Health)
-            {
-                AddMessage(dummyenemy.Name + " recovered " +
-                    (dummyenemy.GetEnemyStats().Health-lastEnemyHealth)
-                    +" health!");
-            }
-            else if(dummyenemy.GetEnemyStats().Health == 0 && dummyenemy.isDead==false)
-            {
-                AddMessage(dummyenemy.Name + " died!");
-                dummyenemy.isDead = true;
-            }
-            //end if block dealing with enemy
-            if(lastPlayerHealth == dummyplayer.GetPlayerStats().Health &&
-                lastEnemyHealth==dummyenemy.GetEnemyStats().Health)
+            if (p.lastPlayerHealth == p.GetPlayerStats().Health &&
+                selectedEnemy.lastEnemyHealth == selectedEnemy.GetEnemyStats().Health)
             {
                 AddMessage("No effect..");
             }
+        }
+
+        private void DetermineEnemyMessages()
+        {
+            if (selectedEnemy.lastEnemyHealth > selectedEnemy.GetEnemyStats().Health &&
+                selectedEnemy.GetEnemyStats().Health != 0)
+            {
+                AddMessage(selectedEnemy.Name + " took " +
+                    (selectedEnemy.lastEnemyHealth - selectedEnemy.GetEnemyStats().Health)
+                    + " damage!");
+            }
+            else if (selectedEnemy.lastEnemyHealth < selectedEnemy.GetEnemyStats().Health)
+            {
+                AddMessage(selectedEnemy.Name + " recovered " +
+                    (selectedEnemy.GetEnemyStats().Health - selectedEnemy.lastEnemyHealth)
+                    + " health!");
+            }
+            else if (selectedEnemy.GetEnemyStats().Health == 0 && selectedEnemy.isDead == false)
+            {
+                AddMessage(selectedEnemy.Name + " died!");
+                selectedEnemy.isDead = true;
+            }
+        }
+
+        private void DeterminePlayerMessages(Player p)
+        {
+            if (p.lastPlayerHealth > p.GetPlayerStats().Health &&
+                p.GetPlayerStats().Health != 0)
+            {
+                AddMessage(p.Name + " took " +
+                    (p.lastPlayerHealth - p.GetPlayerStats().Health)
+                    + " damage!");
+            }
+
+            else if (p.lastPlayerHealth < p.GetPlayerStats().Health)
+            {
+                AddMessage(p.Name + " recovered " +
+                    (p.GetPlayerStats().Health - p.lastPlayerHealth)
+                    + " health!");
+            }
+
+            else if (p.GetPlayerStats().Health == 0 && p.isFainted == false)
+            {
+                AddMessage(p.Name + " fainted!");
+                selectedPlayer.isFainted = true;
+            }
+        }
+
+        public bool IsKeyClicked(Keys key)
+        {
+            return prevKeyboardState.IsKeyUp(key) &&
+                currentKeyboardState.IsKeyDown(key);
         }
     }
 }

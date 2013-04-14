@@ -18,6 +18,8 @@ namespace BlackHoleLoans
         public Skill skillA{get;set;}
         public Skill skillB{get;set;}
         public bool isFainted { get; set; }
+        public bool hasGone { get; set; }
+        public int lastPlayerHealth { get; set; }
         //creates a player with skills
         public Player(int atk, int def, int con, int health,string n,Skill a, Skill b)//also pass in array of textures (player dir movement) & an int (for which class
         //the player is?) - don't need anything for the race
@@ -27,6 +29,7 @@ namespace BlackHoleLoans
             skillA = a;
             skillB = b;
             isFainted = false;
+            hasGone = false;
         }
       
         public PlayerStatistics GetPlayerStats()

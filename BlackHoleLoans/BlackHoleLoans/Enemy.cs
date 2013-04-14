@@ -20,6 +20,7 @@ namespace BlackHoleLoans
         public Skill skillA { get; set; }
         public Skill skillB { get; set; }
         Random random;
+        public int lastEnemyHealth { get; set; }
         //creates an enemy without skills
         public Enemy(int att, int def, int con,int health, string n)
         {
@@ -55,10 +56,10 @@ namespace BlackHoleLoans
             return enemyStats;
         }
 
-        public void ExecuteAI1(Player p,Enemy e)
+        public void ExecuteAI1(Player p)
         {
             int damage = enemyStats.Attack - p.GetPlayerStats().Defence;
-            if (damage < 0)
+            if (damage <= 0)
             {
                 damage = 1;
             }
@@ -85,7 +86,7 @@ namespace BlackHoleLoans
                 if (skillA.isDamage)
                 {
                     int damage = (int)(enemyStats.Concentration * skillA.skillRatio) - p.GetPlayerStats().Defence;
-                    if (damage < 0)
+                    if (damage <= 0)
                     {
                         damage = 1;
                     }

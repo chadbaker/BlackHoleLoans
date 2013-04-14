@@ -22,9 +22,8 @@ namespace BlackHoleLoans
         CombatTest combattest;
         KeyboardState prevKeyboardState, currentKeyboardState;
         float frameRate;
-        public bool runCombat { get; set; }
-        public Player player { get; set; }
-        public Enemy enemy { get; set; }
+        public Player[] player;
+        public Enemy[] enemy;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -33,8 +32,23 @@ namespace BlackHoleLoans
             graphics.PreferredBackBufferHeight = 600;
             IsMouseVisible = true;
             currentKeyboardState = Keyboard.GetState();
-            runCombat = false;
-            combattest = new CombatTest(Content,this);
+            player = new Player[3]
+            {
+              new Player(5,5,5,50,"Player1",new Skill(Skills.Fire),
+                new Skill(Skills.Ice)),
+              new Player(5,5,5,30,"Player2",new Skill(Skills.Fire),
+                new Skill(Skills.Ice)),
+              new Player(5,5,5,20,"Player3",new Skill(Skills.Fire),
+                new Skill(Skills.Ice))
+            };
+            enemy = new Enemy[3]
+            {
+                new Enemy(5,5,5,10,"Dummy1"),
+                new Enemy(5,5,5,10,"Dummy2"),
+                new Enemy(5,5,5,10,"Dummy3")
+            };
+            combat = new Combat(Content,graphics.PreferredBackBufferHeight,
+                graphics.PreferredBackBufferWidth,this,player,enemy);
         }
 
         /// <summary>
@@ -58,8 +72,8 @@ namespace BlackHoleLoans
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            combattest.SetSpritebatch(spriteBatch);
-            combattest.LoadContent();
+            combat.SetSpriteBatch(spriteBatch);
+            combat.LoadContent();
             // TODO: use this.Content to load your game content here
         }
 
@@ -87,14 +101,7 @@ namespace BlackHoleLoans
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             // TODO: Add your update logic here
-            if (runCombat)
-            {
-                combat.Update(gameTime);
-            }
-            else
-            {
-                combattest.Update(gameTime);
-            }
+            combat.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -106,14 +113,7 @@ namespace BlackHoleLoans
         {
             GraphicsDevice.Clear(Color.Green);
             spriteBatch.Begin();
-            if (runCombat)
-            {
-                combat.Draw(gameTime);
-            }
-            else
-            {
-                combattest.Draw();
-            }
+            combat.Draw(gameTime);
             spriteBatch.End();
             // TODO: Add your drawing code here
 
