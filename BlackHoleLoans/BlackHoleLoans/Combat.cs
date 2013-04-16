@@ -53,11 +53,20 @@ namespace BlackHoleLoans
             currentKeyboardState = Keyboard.GetState();
             thePlayers = p;
             theEnemies = e;
-            selectedPlayer = new Player(5,5,5,25,"Player",new Skill(Skills.Fire),
-                new Skill(Skills.Heal));
-            selectedEnemy = new Enemy(5, 5, 5, 10, "Dummy");
             messageQueue = new Queue<string>();
             AddMessage("Player Turn");
+        }
+
+        public bool IsDone()
+        {
+            if (AllPlayersAreFainted() || AllEnemiesAreDead())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void LoadContent()
@@ -83,7 +92,7 @@ namespace BlackHoleLoans
             prevKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
             #region combat menu logic
-            if (executeMenuLogic)
+            if (executeMenuLogic&&!IsDone())
             {
                 UpdateMenuOption();
                 if (menuLayer == 0)
@@ -115,6 +124,30 @@ namespace BlackHoleLoans
             for (int i = 0; i < thePlayers.Length;i++)
             {
                 if (!thePlayers[i].hasGone)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool AllPlayersAreFainted()
+        {
+            for (int i = 0; i < thePlayers.Length; i++)
+            {
+                if (!thePlayers[i].isFainted)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool AllEnemiesAreDead()
+        {
+            for (int i = 0; i < theEnemies.Length;i++)
+            {
+                if (!theEnemies[i].isDead)
                 {
                     return false;
                 }
@@ -294,21 +327,19 @@ namespace BlackHoleLoans
             {
                 lowestMenuOption = 2;
             }
-            else if (layer == 2)
-            {
-                lowestMenuOption = theEnemies.Length;
-            }
-            else
+            else if (layer == 2||layer==0)
             {
                 lowestMenuOption = 3;
+            }
+            else if (layer == 3)
+            {
+                lowestMenuOption = theEnemies.Length;
             }
             menuLayer = layer;
         }
 
         public void Draw(GameTime gameTime)
         {
-            MouseState mouseState = Mouse.GetState();
-            spriteBatch.DrawString(combatfontsmall,mouseState.X+" , "+mouseState.Y,new Vector2(0,0),Color.White);
             DrawCombatMenu();
             DrawEntities();
             DrawMessageQueue(gameTime);
@@ -341,8 +372,11 @@ namespace BlackHoleLoans
             AddMessage("Enemy Turn");
             for (int i = 0; i < theEnemies.Length;i++)
             {
-                SelectPlayer();
-                ExecuteEnemyAction(theEnemies[i],gameTime);
+                if (!theEnemies[i].isDead)
+                {
+                    SelectPlayer();
+                    ExecuteEnemyAction(theEnemies[i], gameTime);
+                }
             }
         }
 
@@ -383,10 +417,10 @@ namespace BlackHoleLoans
         //used to select a player for enemies to attack
         private void SelectPlayer()
         {
-            enemySelectedPlayer = thePlayers[random.Next(0,2)];
+            enemySelectedPlayer = thePlayers[random.Next(0,3)];
             while(enemySelectedPlayer.isFainted)
             {
-                enemySelectedPlayer = thePlayers[random.Next(0, 2)];
+                enemySelectedPlayer = thePlayers[random.Next(0, 3)];
             }
         }
 
@@ -545,21 +579,21 @@ namespace BlackHoleLoans
 
         private void GrayOutPlayers()
         {
-            if (thePlayers[0].hasGone)
+            if (thePlayers[0].hasGone||thePlayers[0].isFainted)
             {
                 spriteBatch.Draw(gray,
                     new Rectangle(_width / 8 - 55,
                         47 * _height / 64, cursor.Width, cursor.Height + 10),
                         Color.Gray*.5f);
             }
-            if(thePlayers[1].hasGone)
+            if(thePlayers[1].hasGone||thePlayers[1].isFainted)
             {
                 spriteBatch.Draw(gray,
                     new Rectangle(_width / 8 - 55,
                         52 * _height / 64, cursor.Width, cursor.Height + 10),
                         Color.Gray*.5f);
             }
-            if(thePlayers[2].hasGone)
+            if (thePlayers[2].hasGone || thePlayers[2].isFainted)
             {
                 spriteBatch.Draw(gray,
                    new Rectangle(_width / 8 - 55, 57 * _height / 64,
@@ -588,12 +622,15 @@ namespace BlackHoleLoans
         {
             for (int i = 0; i < theEnemies.Length; i++)
             {
-                spriteBatch.Draw(dummyenemytexture,
-                    new Rectangle(7 * _width / 8 - dummyenemytexture.Width, (i + 1) * _height / 6,
-                    dummyenemytexture.Width, dummyenemytexture.Height), Color.White);
+                if (!theEnemies[i].isDead)
+                {
+                    spriteBatch.Draw(dummyenemytexture,
+                        new Rectangle(7 * _width / 8 - dummyenemytexture.Width, (i + 1) * _height / 6,
+                        dummyenemytexture.Width, dummyenemytexture.Height), Color.White);
+                }
             }
         }
-
+        //change to edit how players look
         private void DrawPlayers()
         {
             for (int i = 0; i < thePlayers.Length; i++)
@@ -687,7 +724,7 @@ namespace BlackHoleLoans
             else if (p.GetPlayerStats().Health == 0 && p.isFainted == false)
             {
                 AddMessage(p.Name + " fainted!");
-                selectedPlayer.isFainted = true;
+                p.isFainted = true;
             }
         }
 
