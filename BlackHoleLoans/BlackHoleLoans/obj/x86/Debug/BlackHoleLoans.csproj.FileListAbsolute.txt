@@ -1,18 +1,100 @@
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\BlackHoleLoans.exe
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\BlackHoleLoans.pdb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\obj\x86\Debug\BlackHoleLoans.exe
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\obj\x86\Debug\BlackHoleLoans.pdb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatmenubase.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatfontbig.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\cursor.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\dummyplayertexture.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatfontsmall.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\dummyenemytexture.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\healthbar.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\CombatTest\arrowleft.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\CombatTest\arrowright.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\verysmallfont.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\gray.xnb
-C:\Users\Chad Baker\Documents\Visual Studio 2010\Projects\BlackHoleLoans\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\messagebase.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\MainMenu\stars.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\MainMenu\spaceship.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\MainMenu\BHL4.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Arrows\theArrow.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Arrows\theFlippedArrow.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Arrows\theRightArrow.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Arrows\theLeftArrow.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Avatar\ArrowDown.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Avatar\ArrowLeft.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Avatar\ArrowRight.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Avatar\ArrowUp.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Avatar\mFighterDown.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Avatar\mFighterLeft.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Avatar\mFighterRight.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Avatar\mFighterUp.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mFighterDown.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mFighterDownBlue.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mFighterDownGreen.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mFighterRight.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mFighterRightBlue.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mFighterRightGreen.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mFighterUp.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mShooterDown.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mShooterDownBlue.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mShooterDownGreen.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mShooterLeft.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mShooterLeftBlue.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mShooterLeftGreen.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mShooterRight.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mShooterRightBlue.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mShooterRightGreen.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mShooterUp.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mWizardDown.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mWizardDownBlue.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mWizardDownGreen.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mWizardLeft.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mWizardLeftBlue.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mWizardLeftGreen.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mWizardRight.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mWizardRightBlue.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mWizardRightGreen.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mWizardUp.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EntityAvatar\Door\Door_0.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EntityAvatar\Door\Door_1.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EntityAvatar\Door\Door_2.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EntityAvatar\Door\Door_3.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EntityAvatar\RedTest\RedArrowDown.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EntityAvatar\RedTest\RedArrowLeft.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EntityAvatar\RedTest\RedArrowRight.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EntityAvatar\RedTest\RedArrowUp.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\bricks.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\dirt.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\grass.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\ground.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\mud.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\road.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\wood_axis.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mFighterLeft.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mFighterLeftBlue.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\PlayerSprites\mFighterLeftGreen.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EnemySprites\BlueCreatureLeft.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatmenubase.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\cursor.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\dummyenemytexture.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\dummyplayertexture.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\gray.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\healthbar.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\messagebase.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EnemySprites\BlueCreatureRight.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\blackYellowFloor.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\brownFloor.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\grayFloor.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Textures\redFloor.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EnemySprites\PurpleMonsterLeft.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EnemySprites\PurpleMonsterRight.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EnemySprites\PurpleSpiderLeft.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\EnemySprites\PurpleSpiderRight.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\CombatBackgrounds\CombatBackgroundBrown.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\CombatBackgrounds\CombatBackgroundRed.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\CombatBackgrounds\CombatBackgroundYellow.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Fonts\MenuOptions.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Fonts\MenuTitles.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatfontbig.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\combatfontsmall.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\verysmallfont.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Fonts\PauseMenu.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\BlackHoleLoans.exe
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\BlackHoleLoans.pdb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\obj\x86\Debug\BlackHoleLoans.exe
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\obj\x86\Debug\BlackHoleLoans.pdb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\menuselect.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\menuconfirm.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\menuback.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\battletheme.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\battletheme.wma
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\enemydeath.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\winsound.xnb
+C:\Users\Chad Baker\Downloads\BlackHoleLoans-master (1)\BlackHoleLoans-master\BlackHoleLoans\BlackHoleLoans\bin\x86\Debug\Content\Combat\losesound.xnb

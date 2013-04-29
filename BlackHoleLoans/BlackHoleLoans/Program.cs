@@ -1,6 +1,6 @@
 using System;
 
-namespace BlackHoleLoans
+namespace BlackHoleLoans.PlayerRelated
 {
 #if WINDOWS || XBOX
     static class Program
